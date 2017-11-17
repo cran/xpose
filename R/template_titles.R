@@ -1,0 +1,73 @@
+#' Template titles
+#'
+#' @description Template titles can be used to create highly informative diagnostics plots. 
+#' They can be applied to any plot title, subtitle, caption and the filename when saving 
+#' with the \code{\link{xpose_save}} function. 
+#' 
+#' Template titles are defined via a single string containing key variables staring 
+#' with a @ (e.g. @ofv) which will be replaced by their actual value when rendering the plot.
+#' For example '@run, @nobs observations in @nind subjects' would become 'run001, 
+#' 1022 observations in 74 subjects'
+#' 
+#' Many key variables are available:
+#' \describe{
+#'  \item{@condn}{Condition number}
+#'  \item{@covtime}{Covariance matrix runtime}
+#'  \item{@data}{Model input data used}
+#'  \item{@descr}{Model description}
+#'  \item{@dir}{Model directory}
+#'  \item{@epsshk}{Epsilon shrinkage}
+#'  \item{@errors}{Run errors (e.g termination error)}
+#'  \item{@esampleseed}{ESAMPLE seed number (used in NPDE)}
+#'  \item{@etashk}{Eta shrinkage}
+#'  \item{@file}{Model file name}
+#'  \item{@label}{Model label}
+#'  \item{@method}{Estimation method or sim}
+#'  \item{@nesample}{Number of ESAMPLE (used in NPDE)}
+#'  \item{@nind}{Number of individuals}
+#'  \item{@nobs}{Number of observations}
+#'  \item{@nsig}{Number of significant digits}
+#'  \item{@nsim}{Number of simulations}
+#'  \item{@ofv}{Objective function value}
+#'  \item{@page and @lastpage}{Are respectively the page number and the number 
+#'  of the last page when faceting on multiple pages}
+#'  \item{@probn}{Problem number}
+#'  \item{@plotfun}{Name of the plot function}
+#'  \item{@ref}{Reference model}
+#'  \item{@run}{Model run name}
+#'  \item{@runtime}{Estimation/Sim runtime}
+#'  \item{@software}{Software used (e.g. NONMEM)}
+#'  \item{@simseed}{Simulation seed}
+#'  \item{@subroutine}{Differential equation solver}
+#'  \item{@timestart}{Run start time}
+#'  \item{@timestop}{Run stop time}
+#'  \item{@timeplot}{Time of the plot rendering}
+#'  \item{@term}{Termination message}
+#'  \item{@version}{Software version (e.g. 7.3)}
+#'  \item{@vpcci}{VPC confidence interval}
+#'  \item{@vpcdir}{VPC data directory}
+#'  \item{@vpclloq}{VPC lower limit of quantification}
+#'  \item{@vpcnsim}{Number of simulations for VPC}
+#'  \item{@vpcpi}{VPC prediction interval}  
+#'  \item{@vpculoq}{VPC upper limit of quantification}
+#'  \item{@warnings}{Run warnings (e.g. boundary)}
+#'  \item{@x @y etc.}{Name of any ggplot2 variable used for mapping in an \code{aes()} type function}
+#' }
+#' @seealso \link{xpose_save}
+#' @examples
+#' # Defined when creating a plot
+#' dv_vs_ipred(xpdb_ex_pk, 
+#'             title = '@x vs. @y',
+#'             subtitle = '@ofv, @nind subjects, @nobs obs.',
+#'             caption = '@run, @descr')
+#'             
+#' # Any label can be modified later on
+#' dv_vs_ipred(xpdb_ex_pk, aes(point_color = SEX, 
+#'                             line_color = SEX)) + 
+#'  labs(title = 'This runs is: @descr', 
+#'       color = 'Color scale for @run',
+#'       x     = 'IPRED for @nind subjects',
+#'       subtitle = NULL)
+#' 
+#' @name template_titles
+NULL

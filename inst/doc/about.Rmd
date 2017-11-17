@@ -1,0 +1,35 @@
+---
+title: "About xpose"
+author: "Benjamin Guiastrennec"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Customize plots}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Our team
+- [Benjamin Guiastrennec](mailto:guiastrennec@gmail.com) *(Uppsala University)*
+- [Andrew C. Hooker](mailto:andrew.hooker@farmbio.uu.se) *(Uppsala University)*
+- [Anna Olofsson](mailto:anna.olofsson@pharmetheus.com) *(Pharmetheus)*
+- [Sebastian Ueckert](mailto:sebastian.ueckert@farmbio.uu.se) *(Uppsala University)*
+- [Ron Keizer](mailto:ronkeizer@gmail.com) *(InsightRx)*
+- [Kajsa Harling](mailto:kajsa.harling@pharmetheus.com) *(Pharmetheus)*
+- [Mike K. Smith](mailto:mike.k.smith@pfizer.com) *(Pfizer)*
+- [Elodie Plan](mailto:elodie.plan@pharmetheus.com) *(Pharmetheus)*
+- [Mats O. Karlsson](mailto:mats.karlsson@farmbio.uu.se) *(Uppsala University)*
+  
+# Our sponsors
+The xpose package development was kindly sponsored by:
+
+- [Pharmetheus](http://pharmetheus.com)
+- [Pfizer](http://www.pfizer.com)
+
+# Our history
+The new xpose was inspired from data visualization and model diagnostics concepts established by the [xpose4](http://xpose.sourceforge.net) package. Xpose4 was developed by the [Department of Pharmaceutical Biosciences](http://www.farmbio.uu.se/forskning/researchgroups/pharmacometrics/) at Uppsala University:
+
+- Copyright (C) 2009-present Andrew C. Hooker, Mats O. Karlsson and E. Niclas Jonsson.
+- Copyright (C) 2005-2008 Andrew C. Hooker, Justin J. Wilkins, Mats O. Karlsson and E. Niclas Jonsson.
+- Copyright (C) 1998-2004 E. Niclas Jonsson and Mats O. Karlsson.
+
