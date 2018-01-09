@@ -3,7 +3,7 @@
 xpose <a href="https://UUPharmacometrics.github.io/xpose/"><img src="man/figures/logo.png" align="right" /></a>
 ===============================================================================================================
 
-[![travis\_status](https://travis-ci.org/UUPharmacometrics/xpose.svg?branch=master)](https://travis-ci.org/UUPharmacometrics/xpose) [![appveyor status](https://ci.appveyor.com/api/projects/status/f6k09rf2cfi3vcs2?svg=true)](https://ci.appveyor.com/project/guiastrennec/xpose)[![cran\_version](http://www.r-pkg.org/badges/version/xpose)]() [![codecov](https://codecov.io/gh/UUPharmacometrics/xpose/branch/master/graph/badge.svg)](https://codecov.io/gh/UUPharmacometrics/xpose)
+[![travis\_status](https://travis-ci.org/UUPharmacometrics/xpose.svg?branch=master)](https://travis-ci.org/UUPharmacometrics/xpose) [![appveyor status](https://ci.appveyor.com/api/projects/status/f6k09rf2cfi3vcs2?svg=true)](https://ci.appveyor.com/project/guiastrennec/xpose)[![cran\_version](http://www.r-pkg.org/badges/version/xpose)]() [![codecov](https://codecov.io/gh/UUPharmacometrics/xpose/branch/master/graph/badge.svg)](https://codecov.io/gh/UUPharmacometrics/xpose) [![downloads](https://cranlogs.r-pkg.org/badges/grand-total/xpose)](http://cran.rstudio.com/web/packages/xpose/index.html)
 
 ### Overview
 
@@ -11,9 +11,11 @@ xpose <a href="https://UUPharmacometrics.github.io/xpose/"><img src="man/figures
 
 ### Installation
 
-Install the development version from github
-
 ``` r
+# Install the lastest release from the CRAN
+install.packages('xpose')
+
+# Or install the development version from GitHub
 # install.packages('devtools')
 devtools::install_github('UUPharmacometrics/xpose')
 ```

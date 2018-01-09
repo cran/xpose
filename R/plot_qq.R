@@ -101,11 +101,16 @@ eta_qq <- function(xpdb,
     stop('No eta column found in the xpdb data index.', call. = FALSE)
   }
   
+  if (software(xpdb) == 'nonmem') {
+    post_processing_eta <-  reorder_factors(prefix = 'ETA(', suffix = ')')
+  } else {
+    post_processing_eta <- NULL
+  }
   xplot_qq(xpdb = xpdb, quiet = quiet,
            opt = data_opt(.problem = .problem, 
                           filter = only_distinct(xpdb, .problem, facets, quiet), 
                           tidy = TRUE, value_col = eta_col,
-                          post_processing = reorder_factors(prefix = 'ETA(', suffix = ')')),
+                          post_processing = post_processing_eta),
            mapping = aes_c(aes_string(sample = 'value'), mapping), 
            type = type, guide = guide, facets = facets,
            xscale = check_scales('x', log), 

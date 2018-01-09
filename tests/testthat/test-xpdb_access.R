@@ -173,6 +173,12 @@ test_that('get_prm works properly', {
     get_prm(transform = FALSE, quiet = TRUE)
   expect_true('xpose_prm' %in% class(get_prm_test_no_se))
   expect_identical(get_prm_test_no_se, get_prm_ctrl_no_se)
+  
+  # Test w/o FIXED iteration
+  expect_warning(xpdb_ex_pk %>% 
+                   filter(.source = 'ext', .problem = 1, ITERATION != '-1000000006') %>% 
+                   get_prm(transform = FALSE, quiet = TRUE),
+                 regexp = 'Iteration `-1000000006` not found')
 })
 
 

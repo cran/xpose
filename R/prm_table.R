@@ -25,10 +25,9 @@ prm_table <- function(xpdb,
                show_all = show_all, quiet = TRUE)
   
   if (transform) {
-    cat('\nThe relative standard errors for omega and sigma are reported on the approximate
-standard deviation scale (SE/variance estimate)/2.\n')
+    cat('\nReporting transformed parameters:\nFor the OMEGA and SIGMA matrices, values are reported as standard deviations for the diagonal elements and as correlations for the off-diagonal elements. The relative standard errors (RSE) for OMEGA and SIGMA are reported on the approximate standard deviation scale (SE/variance estimate)/2. Use `transform = FALSE` to report untransformed parameters.\n')
   } else {
-    cat('\nReporting untransformed parameters.\n')
+    cat('\nReporting untransformed parameters:\nFor the OMEGA and SIGMA matrices, values are reported as variances for the diagonal elements and as covariances for the off-diagonal elements.\n')
   }
   
   # Convert single prm_df to list

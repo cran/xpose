@@ -58,11 +58,14 @@ test_that('dot arguments are properly passed to readr', {
 })
 
 test_that('returns a tibble when user mode is used', {
+  skip_on_cran() # Prevent issues in the absence of long double
   expect_equal(test_tab, ctrl_tab)
 })
 
 test_that('tables with firstonly are properly handled', {
   expect_message(tmp_table <- read_nm_tables(firstonly_test, quiet = FALSE), regexp = 'Consolidating|Joining')
+  
+  skip_on_cran() # Prevent issues in the absence of long double
   expect_equal(tmp_table$data[[1]], 
                xpdb_ex_pk$data$data[[1]][, unlist(xpdb_ex_pk$data$index[[1]][xpdb_ex_pk$data$index[[1]]$table %in% c('sdtab001', 'patab001'),]$col) ])
 })
@@ -80,7 +83,7 @@ test_that('properly assign skip and header arguments', {
   expect_equal(read_nm_tables(file = files[2], quiet = TRUE),  ctrl_file)
 })
 
-test_that('properly pick us column signs', {
+test_that('properly pick up column signs', {
   files <- tempfile('tmp_c')
   on.exit(unlink(files))
   writeLines(text = minus_sign_test, con = files)

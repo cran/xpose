@@ -280,7 +280,7 @@ get_summary <- function(xpdb,
 #' @param .subprob The subproblem to be used, by default returns the last one for each file.
 #' @param .method The estimation method to be used, by default returns the last one for each file
 #' @param digits The number of significant digits to be displayed.
-#' @param transform Should diagonal OMEGA and SIGMA elements be transformed to coeficient of variation, 
+#' @param transform Should diagonal OMEGA and SIGMA elements be transformed to standard deviation and 
 #' off diagonal elements be transformed to correlations. 
 #' @param show_all Logical, whether the 0 fixed off-diagonal elements should be removed from the output.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
@@ -342,7 +342,7 @@ get_prm <- function(xpdb,
     dplyr::mutate(prm_names = purrr::map(.x = as.list(.$problem), .f = function(x, code) {
       
       # Collect parameter names from the model code
-      code <- code[code$problem == x,]
+      code <- code[code$problem == x & nchar(code$code) > 0,]
       list(theta = code$comment[code$subroutine == 'the'],
            omega = code[code$subroutine == 'ome', ] %>%
              dplyr::filter(!(stringr::str_detect(.$code, 'BLOCK\\(\\d+\\)(?!.*SAME)') & .$comment == '')) %>% 
@@ -355,6 +355,11 @@ get_prm <- function(xpdb,
       prm_mean <- grab_iter(ext = data$ext, iter = -1000000000)
       prm_se   <- grab_iter(ext = data$ext, iter = -1000000001)
       prm_fix  <- grab_iter(ext = data$ext, iter = -1000000006)
+      
+      if (all(is.na(prm_fix))) {
+        warning('Iteration `-1000000006` not found in the `.ext` file. Assuming no fixed parameters, check the output carefully.', call. = FALSE)
+        prm_fix[is.na(prm_fix)] <- 0
+      }
       
       if (transform) {
         if (!is.null(data$cov)) {
@@ -391,7 +396,7 @@ get_prm <- function(xpdb,
                                               stringr::str_detect(.$name, 'SIGMA') ~ 'sig'),
                       number = stringr::str_replace_all(.$name, '[^\\d,]+', ''),
                       se     = ifelse(.$fixed, NA_real_, as.numeric(.$se)),
-                      rse    = ifelse(.$fixed, NA_real_, as.numeric(.$rse))) %>%
+                      rse    = ifelse(.$fixed, NA_real_, abs(as.numeric(.$rse)))) %>%
         tidyr::separate(col = 'number', into = c('m', 'n'), sep = ',', fill = 'right') %>% 
         dplyr::mutate(diagonal = dplyr::if_else(.$m == .$n, TRUE, FALSE)) %>% 
         dplyr::rename_(.dots = list(value = 'mean')) %>% 

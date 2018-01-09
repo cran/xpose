@@ -166,9 +166,15 @@ dv_vs_ipred(xpdb) +
 ```
 
 ### Scales options
-The argument `log` allows to automatically log the relevant axes when set to `TRUE`. Additional arguments can be provided to the scales via the mapping by using the naming convention `xscale_xxx` or `yscale_xxx` where `xxx` is the name of a `ggplot2` scale argument such as `name`, `breaks`, `labels`, `expand`.
+The argument `log` allows to log-transform the axes. Accepted values are `x`, `y` or `xy`.
 
-```{r scales demo}
+```{r log-scales demo, warning=FALSE}
+dv_vs_ipred(xpdb, log = 'xy', subtitle = 'Plot on log scale')
+```
+
+Additional arguments can be provided to the scales via the mapping by using the naming convention `xscale_xxx` or `yscale_xxx` where `xxx` is the name of a `ggplot2` scale argument such as `name`, `breaks`, `labels`, `expand`.
+
+```{r scales-options demo}
 dv_vs_ipred(xpdb, 
             xscale_breaks = c(0.3, 0.8, 1.3),
             xscale_labels = c('Low', 'Med', 'High'),

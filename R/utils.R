@@ -277,3 +277,21 @@ make_extension <- function(x) {
 update_extension <- function(x, ext) {
   stringr::str_replace(x, '\\.[[:alnum:]]+$', ext)
 }
+
+
+#' Get software from the xpdb
+#' 
+#' @description Get the name of the modeling softwre on which the xpdb was created
+#' 
+#' @param xpdb An xpose database object.
+#' 
+#' @return The name of a modeling tool.
+#' 
+#' @keywords internal
+#' @export
+software <- function(xpdb) {
+  x <- get_summary(xpdb)
+  x <- x$value[x$label == 'software']
+  if (is.null(x)) x <- 'na'
+  x
+}

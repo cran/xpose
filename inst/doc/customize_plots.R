@@ -94,7 +94,10 @@ dv_vs_ipred(xpdb) +
            xmin = 1, xmax = Inf,
            ymin = 1, ymax = Inf)
 
-## ----scales demo---------------------------------------------------------
+## ----log-scales demo, warning=FALSE--------------------------------------
+dv_vs_ipred(xpdb, log = 'xy', subtitle = 'Plot on log scale')
+
+## ----scales-options demo-------------------------------------------------
 dv_vs_ipred(xpdb, 
             xscale_breaks = c(0.3, 0.8, 1.3),
             xscale_labels = c('Low', 'Med', 'High'),

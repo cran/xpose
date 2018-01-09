@@ -52,13 +52,17 @@ ind_plots <- function(xpdb,
     warning('In ind_plots the argument `color` should be used instead of `line/point/text_color`.', call. = FALSE)
   }
   
+  variable_names <- xp_var(xpdb, .problem, type = c('dv', 'pred', 'ipred'))$col
+  
   do.call('xplot_scatter', 
           c(extra_args, 
             list(xpdb = xpdb, group = group, quiet = quiet,
                  opt = data_opt(.problem = .problem, tidy = TRUE,
                                 filter = only_obs(xpdb, .problem, quiet),
-                                value_col = xp_var(xpdb, .problem, 
-                                                   type = c('dv', 'pred', 'ipred'))$col),
+                                value_col = variable_names,
+                                post_processing = function(x) {
+                                  dplyr::mutate(.data = x, variable = factor(x$variable, levels = variable_names))
+                                }),
                  mapping = aes_c(aes_string(x = xp_var(xpdb, .problem, type = 'idv')$col, 
                                             y = 'value', line_color = 'variable', text_color = 'variable',
                                             line_linetype = 'variable', point_color = 'variable', 
