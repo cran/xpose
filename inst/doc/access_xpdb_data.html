@@ -69,7 +69,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Access the xpdb data</h1>
 <h4 class="author"><em>Benjamin Guiastrennec</em></h4>
-<h4 class="date"><em>09 January, 2018</em></h4>
+<h4 class="date"><em>31 January, 2018</em></h4>
 
 
 
@@ -117,18 +117,18 @@ code</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span><span class="kw">get_data</span>(xpdb, <span class="dt">table =</span> <span class="st">'cotab001'</span>)
 data</code></pre></div>
 <pre><code># A tibble: 550 x 4
-   ID      CLCR   AGE    WT
-   &lt;fctr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1 110     66.0  68.0 105  
- 2 110     66.0  68.0 105  
- 3 110     66.0  68.0 105  
- 4 110     66.0  68.0 105  
- 5 110     66.0  68.0 105  
- 6 110     66.0  68.0 105  
- 7 110     66.0  68.0 105  
- 8 112     47.0  73.0  80.0
- 9 112     47.0  73.0  80.0
-10 112     47.0  73.0  80.0
+   ID     CLCR   AGE    WT
+   &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 110    66.0  68.0 105  
+ 2 110    66.0  68.0 105  
+ 3 110    66.0  68.0 105  
+ 4 110    66.0  68.0 105  
+ 5 110    66.0  68.0 105  
+ 6 110    66.0  68.0 105  
+ 7 110    66.0  68.0 105  
+ 8 112    47.0  73.0  80.0
+ 9 112    47.0  73.0  80.0
+10 112    47.0  73.0  80.0
 # ... with 540 more rows</code></pre>
 </div>
 <div id="access-the-run-files" class="section level3">
@@ -137,19 +137,20 @@ data</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">file &lt;-<span class="st"> </span><span class="kw">get_file</span>(xpdb, <span class="dt">file =</span> <span class="st">'run001.ext'</span>)
 file</code></pre></div>
 <pre><code># A tibble: 28 x 16
-   ITERA… THET… THET… THET… THET… THET…  THETA6  THETA7 `SIG… `OMEG… `OME… `OMEG… `OME… `OME… `OME…
-    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1   0     25.4  1.47  7.45 0.214 0.200 0.00983 0.00601  1.00 0.0740     0 0.0389     0     0  2.38
- 2   1.00  26.3  1.26  7.35 0.219 0.217 0.00989 0.00602  1.00 0.0744     0 0.0408     0     0  2.39
- 3   2.00  25.6  1.47  7.29 0.216 0.212 0.00987 0.00603  1.00 0.0741     0 0.0411     0     0  2.41
- 4   3.00  26.8  1.49  5.76 0.213 0.213 0.00979 0.00628  1.00 0.0730     0 0.0652     0     0  2.58
- 5   4.00  26.7  1.49  5.69 0.213 0.212 0.00979 0.00629  1.00 0.0730     0 0.0664     0     0  2.58
- 6   5.00  26.7  1.49  5.66 0.213 0.212 0.00979 0.00630  1.00 0.0730     0 0.0664     0     0  2.57
- 7   6.00  26.6  1.49  5.03 0.210 0.217 0.0100  0.00652  1.00 0.0724     0 0.0633     0     0  2.35
- 8   7.00  26.6  1.49  4.93 0.205 0.217 0.0100  0.00658  1.00 0.0717     0 0.0623     0     0  2.35
- 9   8.00  26.6  1.48  4.62 0.211 0.217 0.00951 0.00735  1.00 0.0633     0 0.0547     0     0  2.57
-10   9.00  26.6  1.46  4.41 0.209 0.217 0.00903 0.00874  1.00 0.0766     0 0.0493     0     0  2.47
-# ... with 18 more rows, and 1 more variable: OBJ &lt;dbl&gt;</code></pre>
+   ITERATION THETA1 THETA2 THETA3 THETA4 THETA5  THETA6  THETA7 `SIGMA(1,1)` `OMEGA(1,1)`
+       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
+ 1      0      25.4   1.47   7.45  0.214  0.200 0.00983 0.00601         1.00       0.0740
+ 2      1.00   26.3   1.26   7.35  0.219  0.217 0.00989 0.00602         1.00       0.0744
+ 3      2.00   25.6   1.47   7.29  0.216  0.212 0.00987 0.00603         1.00       0.0741
+ 4      3.00   26.8   1.49   5.76  0.213  0.213 0.00979 0.00628         1.00       0.0730
+ 5      4.00   26.7   1.49   5.69  0.213  0.212 0.00979 0.00629         1.00       0.0730
+ 6      5.00   26.7   1.49   5.66  0.213  0.212 0.00979 0.00630         1.00       0.0730
+ 7      6.00   26.6   1.49   5.03  0.210  0.217 0.0100  0.00652         1.00       0.0724
+ 8      7.00   26.6   1.49   4.93  0.205  0.217 0.0100  0.00658         1.00       0.0717
+ 9      8.00   26.6   1.48   4.62  0.211  0.217 0.00951 0.00735         1.00       0.0633
+10      9.00   26.6   1.46   4.41  0.209  0.217 0.00903 0.00874         1.00       0.0766
+# ... with 18 more rows, and 6 more variables: `OMEGA(2,1)` &lt;dbl&gt;, `OMEGA(2,2)` &lt;dbl&gt;,
+#   `OMEGA(3,1)` &lt;dbl&gt;, `OMEGA(3,2)` &lt;dbl&gt;, `OMEGA(3,3)` &lt;dbl&gt;, OBJ &lt;dbl&gt;</code></pre>
 </div>
 <div id="access-the-parameter-estimates" class="section level3">
 <h3>Access the parameter estimates</h3>

@@ -60,11 +60,11 @@ vpc_data <- function(xpdb,
     sim_data <- get_data(xpdb, .problem = sim_problem)
     if (is.null(opt$obs_cols)) {
       obs_cols <- xp_var(xpdb, obs_problem, type = c('id', 'idv', 'dv', 'pred'))
-      obs_cols <- purrr::set_names(obs_cols$col, nm = obs_cols$type)
+      obs_cols <- purrr::set_names(as.list(obs_cols$col), nm = obs_cols$type)
     }
     if (is.null(opt$sim_cols)) {
       sim_cols <- xp_var(xpdb, sim_problem, type = c('id', 'idv', 'dv', 'pred'))
-      sim_cols <- purrr::set_names(sim_cols$col, nm = sim_cols$type)
+      sim_cols <- purrr::set_names(as.list(sim_cols$col), nm = sim_cols$type)
     }
     vpc_nsim <- xpdb %>% 
       get_summary(sim_problem) %>% 
@@ -145,7 +145,10 @@ vpc_data <- function(xpdb,
   
   # Format vpc output
   xpdb$special <- vpc_dat %>%
-    purrr::discard(names(.) %in% c('sim', 'stratify_original', 'stratify_color', 'facet', 'as_percentage')) %>%
+    purrr::discard(names(.) %in% c('sim', 'stratify_original', 
+                                   'stratify_color', 'facet', 
+                                   'as_percentage', 'xlab', 
+                                   'ylab', 'labeller')) %>%
     purrr::map_at('vpc_dat', function(x) {
       x <- x %>% 
         tidyr::gather(key = 'tmp', value = 'value', dplyr::matches('\\.(low|med|up)')) %>% 
