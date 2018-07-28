@@ -33,6 +33,7 @@ xplot_qq <- function(xpdb,
                      title     = NULL,
                      subtitle  = NULL,
                      caption   = NULL,
+                     tag       = NULL,
                      plot_name = 'qq_plot',
                      gg_theme,
                      xp_theme,
@@ -76,10 +77,15 @@ xplot_qq <- function(xpdb,
   
   # Add reference line
   if (guide) {
+    if (utils::packageVersion('ggplot2') >= '3.0.0') {
     xp <- xp + xp_geoms(xp_theme = xpdb$xp_theme,
                         name     = 'guide',
                         ggfun    = 'geom_qq_line',
                         ...)
+    } else {
+      warning('QQ guides are only available for ggplot2 >= 3.0.0.', 
+              call. = FALSE)
+    }
   }
   
   # Define scales
@@ -104,6 +110,10 @@ xplot_qq <- function(xpdb,
   # Add labels
   xp <- xp + labs(title = title, subtitle = subtitle, caption = caption)
   
+  if (utils::packageVersion('ggplot2') >= '3.0.0') {
+    xp <- xp + labs(tag = tag)
+  }
+  
   # Add metadata to plots
   xp$xpose <- list(fun      = plot_name,
                    summary  = xpdb$summary,
@@ -111,70 +121,9 @@ xplot_qq <- function(xpdb,
                    subprob  = attr(data, 'subprob'),
                    method   = attr(data, 'method'),
                    quiet    = quiet,
-                   xp_theme = xpdb$xp_theme[stringr::str_c(c('title', 'subtitle', 'caption'), 
-                                                           '_suffix')])
+                   xp_theme = xpdb$xp_theme[stringr::str_c(c('title', 'subtitle', 
+                                                             'caption', 'tag'), '_suffix')])
   
   # Ouptut the plot
-  structure(xp, class = c('xpose_plot', class(xp)))
+  as.xpose.plot(xp)
 }
-
-
-# Function based on code written by from Nick Solomon: https://github.com/nicksolomon
-geom_qq_line <- function(mapping = NULL, data = NULL,
-                         geom = 'path', position = 'identity',
-                         ..., distribution = stats::qnorm,
-                         dparams = list(),
-                         line.p = c(.25, .75),
-                         line.expand = c(-.1, .1),
-                         na.rm = FALSE,
-                         show.legend = NA,
-                         inherit.aes = TRUE) {
-  layer(data = data, mapping = mapping, stat = StatQqLine,
-        geom = geom, position = position, show.legend = show.legend,
-        inherit.aes = inherit.aes, 
-        params = list(distribution = distribution,
-                      dparams = dparams, na.rm = na.rm,
-                      line.p = line.p, line.expand = line.expand, ...))
-}
-
-StatQqLine <- ggproto('StatQqLine', Stat,
-                      default_aes = aes(x = ..x.., y = ..y..),
-                      required_aes = c('sample'),
-                      compute_group = function(data, scales, quantiles = NULL,
-                                               distribution = stats::qnorm,
-                                               dparams = list(),
-                                               na.rm = FALSE,
-                                               line.p = c(.25, .75),
-                                               line.expand = c(-.1, .1)) {
-                        sample <- sort(data$sample)
-                        n <- length(sample)
-                        
-                        # Compute theoretical quantiles
-                        if (is.null(quantiles)) {
-                          quantiles <- stats::ppoints(n)
-                        } else {
-                          stopifnot(length(quantiles) == n)
-                        }
-                        
-                        theoretical <- do.call(distribution,
-                                               c(list(p = quote(quantiles)), dparams))
-                        if (length(line.p) != 2) {
-                          stop('Cannot fit line quantiles ', line.p,
-                               '. Parameter line.p must have length 2.',
-                               call = FALSE)
-                        }
-                        x_coords <- do.call(distribution, c(list(p = line.p), dparams))
-                        y_coords <- quantile(sample, line.p)
-                        slope = diff(y_coords)/diff(x_coords)
-                        intercept = y_coords[1L] - slope * x_coords[1L]
-                        
-                        if (length(line.expand) != 2) {
-                          stop('Parameter line.expand must have length 2.', call = FALSE)
-                        }
-                        
-                        out <- data.frame(x = c(min(theoretical) + line.expand[1L],
-                                                max(theoretical) + line.expand[2L]))
-                        out$y <- slope * out$x + intercept
-                        out
-                      }
-)

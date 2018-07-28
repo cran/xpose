@@ -12,6 +12,7 @@
 #' @param title Plot title. Use \code{NULL} to remove.
 #' @param subtitle Plot subtitle. Use \code{NULL} to remove.
 #' @param caption Page caption. Use \code{NULL} to remove.
+#' @param tag Plot identification tag. Use \code{NULL} to remove.
 #' @param log String assigning logarithmic scale to axes, can be either '', 
 #' 'x', y' or 'xy'.
 #' @param guide Enable guide display (e.g. unity line).
@@ -40,6 +41,7 @@ dv_vs_ipred <- function(xpdb,
                         title    = '@y vs. @x | @run',
                         subtitle = 'Ofv: @ofv, Eps shrink: @epsshk',
                         caption  = '@dir',
+                        tag      = NULL,
                         log      = NULL,
                         guide    = TRUE,
                         facets,
@@ -60,8 +62,8 @@ dv_vs_ipred <- function(xpdb,
                 type = type, guide = guide, facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
-                title = title, subtitle = subtitle, caption = caption,
-                plot_name = as.character(match.call()[[1]]),
+                title = title, subtitle = subtitle, caption = caption, 
+                tag = tag, plot_name = as.character(match.call()[[1]]),
                 guide_slope = 1, ...)
 }
 
@@ -74,6 +76,7 @@ dv_vs_pred <- function(xpdb,
                        title    = '@y vs. @x | @run',
                        subtitle = 'Ofv: @ofv',
                        caption  = '@dir',
+                       tag      = NULL,
                        log      = NULL,
                        guide    = TRUE,
                        facets,
@@ -95,6 +98,6 @@ dv_vs_pred <- function(xpdb,
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
-                plot_name = as.character(match.call()[[1]]),
+                tag = tag, plot_name = as.character(match.call()[[1]]),
                 guide_slope = 1, ...)
 }

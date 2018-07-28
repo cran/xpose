@@ -203,6 +203,7 @@ vpc_data <- function(xpdb,
            {dplyr::tibble(problem = vpc_prob, method = 'vpc', type = vpc_type, data = list(.), modified = FALSE)} %>%
            {dplyr::bind_rows(xpdb$special, .)} %>% 
     dplyr::distinct_(.dots = c('problem', 'method', 'type'), .keep_all = TRUE)
+  
   msg('\nVPC done', quiet)
-  xpdb
+  as.xpdb(xpdb)
 }

@@ -25,20 +25,13 @@ Useful links:
 Authors:
 \itemize{
   \item Andrew C. Hooker \email{andrew.hooker@farmbio.uu.se} [copyright holder]
-  \item Anna Olofsson \email{anna.olofsson@pharmetheus.com} [copyright holder]
   \item Sebastian Ueckert \email{sebastian.ueckert@farmbio.uu.se} [copyright holder]
-  \item Ron Keizer \email{ronkeizer@gmail.com}
   \item Mats O. Karlsson \email{mats.karlsson@farmbio.uu.se} [copyright holder]
 }
 
 Other contributors:
 \itemize{
-  \item Nick Solomon \email{nick@nicksolomon.me} (Wrote the geom_qq_line function) [contributor]
-  \item Kajsa Harling \email{kajsa.harling@pharmetheus.com} [contributor]
   \item Mike K. Smith \email{mike.k.smith@pfizer.com} [contributor]
-  \item Elodie Plan \email{elodie.plan@pharmetheus.com} [contributor]
-  \item Pharmetheus \email{info@pharmetheus.com} [contributor]
-  \item Pfizer [contributor]
 }
 
 }

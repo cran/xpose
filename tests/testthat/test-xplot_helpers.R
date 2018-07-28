@@ -1,8 +1,9 @@
 context('Check xplot_helpers')
 
-xpdb_NULL <- xpdb_ex_pk
-xpdb_NULL$data <- NULL
+xpdb_NULL       <- xpdb_ex_pk
+xpdb_NULL$data  <- NULL
 xpdb_NULL$files <- NULL
+xpdb_NULL       <- as.xpdb(xpdb_NULL)
 
 # Tests start here --------------------------------------------------------
 # test_that('Check check_vars', {

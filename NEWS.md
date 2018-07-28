@@ -1,3 +1,10 @@
+# xpose 0.4.3
+### General
+* Fixed bug in `get_prm()`/`prm_table()` where off diagonal correlations were improperly computed.
+* Fixed bug in `print.xpose_data()`where a warning from stringi was returned.
+* Fixed multiple bugs introduced by the new versions of tidyverse packages
+* Added compatibility to ggplot2 v3.0.0
+
 # xpose 0.4.2
 ### General
 * Address CRAN requests

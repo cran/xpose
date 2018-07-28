@@ -29,6 +29,7 @@ ind_plots <- function(xpdb,
                       title         = 'Individual plots | @run',
                       subtitle      = 'Ofv: @ofv, Eps shrink: @epsshk',
                       caption       = '@dir | Page @page of @lastpage',
+                      tag           = NULL,
                       log           = NULL,
                       facets,
                       .problem,
@@ -70,8 +71,8 @@ ind_plots <- function(xpdb,
                  type = type, facets = facets,
                  xscale = check_scales('x', log),
                  yscale = check_scales('y', log), 
-                 title = title, subtitle = subtitle, caption = caption,
-                 plot_name = as.character(match.call()[[1]])))) +
+                 title = title, subtitle = subtitle, caption = caption, 
+                 tag = tag, plot_name = as.character(match.call()[[1]])))) +
     scale_alpha_manual(values = point_alpha) +
     scale_color_manual(values = color) +
     scale_linetype_manual(values = line_linetype)

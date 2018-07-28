@@ -107,7 +107,8 @@ xpose_panels <- function(xp_theme, extra_args) {
                            'nrow', 'page', 'byrow')]
     facet_fun <- 'facet_grid_paginate'
   }
-  usr_changes <- intersect(names(thm_arg), names(extra_args))
+  usr_changes    <- intersect(names(thm_arg), names(extra_args))
+  class(thm_arg) <- 'list'
   thm_arg[usr_changes] <- extra_args[usr_changes]
   do.call(facet_fun, thm_arg)
 }

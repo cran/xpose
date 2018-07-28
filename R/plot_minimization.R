@@ -25,6 +25,7 @@ prm_vs_iteration <- function(xpdb,
                              title    = 'Parameter @y vs. @x | @run',
                              subtitle = 'Method: @method, minimization time: @runtime\nTermination message: @term',
                              caption  = '@dir',
+                             tag      = NULL,
                              log      = NULL,
                              guide    = FALSE,
                              facets,
@@ -37,8 +38,8 @@ prm_vs_iteration <- function(xpdb,
   check_xpdb(xpdb, check = 'files')
   if (missing(.problem)) .problem <- last_file_problem(xpdb, 'ext')
   if (missing(.subprob)) .subprob <- last_file_subprob(xpdb, 'ext', .problem)
-  if (missing(.method)) .method  <- last_file_method(xpdb, ext = 'ext', 
-                                                     .problem = .problem, .subprob = .subprob)
+  if (missing(.method)) .method   <- last_file_method(xpdb, ext = 'ext', 
+                                                      .problem = .problem, .subprob = .subprob)
   check_problem(.problem, .subprob, .method)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (missing(facets)) facets <- 'variable'
@@ -63,7 +64,7 @@ prm_vs_iteration <- function(xpdb,
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
-                plot_name = as.character(match.call()[[1]]),
+                tag = tag, plot_name = as.character(match.call()[[1]]),
                 scales = 'free_y', ...)
 }
 
@@ -76,6 +77,7 @@ grd_vs_iteration <- function(xpdb,
                              title    = 'Gradient @y vs. @x | @run',
                              subtitle = 'Method: @method, minimization time: @runtime\nTermination message: @term',
                              caption  = '@dir',
+                             tag      = NULL,
                              log      = NULL,
                              guide    = FALSE,
                              facets,
@@ -88,8 +90,8 @@ grd_vs_iteration <- function(xpdb,
   check_xpdb(xpdb, check = 'files')
   if (missing(.problem)) .problem <- last_file_problem(xpdb, 'grd')
   if (missing(.subprob)) .subprob <- last_file_subprob(xpdb, 'grd', .problem)
-  if (missing(.method)) .method  <- last_file_method(xpdb, ext = 'grd', 
-                                                     .problem = .problem, .subprob = .subprob)
+  if (missing(.method)) .method   <- last_file_method(xpdb, ext = 'grd', 
+                                                      .problem = .problem, .subprob = .subprob)
   check_problem(.problem, .subprob, .method)
   if (missing(quiet)) quiet <- xpdb$options$quiet
   if (missing(facets)) facets <- 'variable'
@@ -114,6 +116,6 @@ grd_vs_iteration <- function(xpdb,
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
-                plot_name = as.character(match.call()[[1]]),
+                tag = tag, plot_name = as.character(match.call()[[1]]),
                 scales = 'free_y', ...)
 }

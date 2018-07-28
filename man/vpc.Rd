@@ -7,9 +7,9 @@
 vpc(xpdb, vpc_type = NULL, mapping = NULL, smooth = TRUE, type = "alpr",
   title = "Visual predictive checks | @run",
   subtitle = "Number of simulations: @vpcnsim, confidence interval: @vpcci\%",
-  caption = "@vpcdir", log = NULL, guide = TRUE, gg_theme, xp_theme,
-  facets, quiet, area_fill = c("steelblue3", "grey60", "steelblue3"),
-  line_linetype = c("93", "solid", "93"), ...)
+  caption = "@vpcdir", tag = NULL, log = NULL, guide = TRUE, gg_theme,
+  xp_theme, facets, quiet, area_fill = c("steelblue3", "grey60",
+  "steelblue3"), line_linetype = c("93", "solid", "93"), ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -31,6 +31,8 @@ line 'l', area 'a', rug 'r' and text 't' or any combination of the five.}
 \item{subtitle}{Plot subtitle. Use \code{NULL} to remove.}
 
 \item{caption}{Page caption. Use \code{NULL} to remove.}
+
+\item{tag}{Plot identification tag. Use \code{NULL} to remove.}
 
 \item{log}{String assigning logarithmic scale to axes, can be either '', 
 'x', y' or 'xy'.}
@@ -92,31 +94,12 @@ By default, some plot functions use a custom stratifying variable named `variabl
 \code{eta_distrib()}. When using the \code{facets} argument, `variable` needs to be added manually 
 e.g. \code{facets = c('SEX', 'variable')} or \code{facets = c('SEX', 'variable')}, but is optional, 
 when using the \code{facets} argument in \code{xp_theme} variable is automatically added whenever needed.
-
-
-Every xpose plot function has built-in faceting functionalities. Faceting arguments 
-are passed to the functions \code{\link[ggforce]{facet_wrap_paginate}} when the \code{facets} 
-argument is a character string (e.g. \code{facets = c('SEX', 'MED1')}) or 
-\code{\link[ggforce]{facet_grid_paginate}} when facets is a formula (e.g. \code{facets = SEX~MED1}).
-All xpose plot functions accept all the arguments for the \code{\link[ggforce]{facet_wrap_paginate}} 
-and \code{\link[ggforce]{facet_grid_paginate}} functions e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
-facets = SEX~MED1, ncol = 3, nrow = 3, page = 1, margins = TRUE, labeller = 'label_both')}.
-
-Faceting options can either be defined in plot functions (e.g. \code{dv_vs_ipred(xpdb_ex_pk, 
-facets = 'SEX')}) or assigned globally to an xpdb object via the \code{xp_theme} (e.g. \code{xpdb 
-<- update_themes(xpdb_ex_pk, xp_theme = list(facets = 'SEX'))}). In the latter example all plots 
-generate from this xpdb will automatically be stratified by `SEX`.
-
-By default, some plot functions use a custom stratifying variable named `variable`, e.g. 
-\code{eta_distrib()}. When using the \code{facets} argument, `variable` needs to be added manually 
-e.g. \code{facets = c('SEX', 'variable')} or \code{facets = c('SEX', 'variable')}, but is optional, 
-when using the \code{facets} argument in \code{xp_theme} variable is automatically added whenever needed.
 }
 
 \section{Template titles}{
 
 Template titles can be used to create highly informative diagnostics plots. 
-They can be applied to any plot title, subtitle and caption. Template titles 
+They can be applied to any plot title, subtitle, caption and tag. Template titles 
 are defined via a single string containing key variables staring with a `@` (e.g. `@ofv`)
 which will be replaced by their actual value when rendering the plot.
 For example `'@run, @nobs observations in @nind subjects'` would become 

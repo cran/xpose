@@ -22,6 +22,7 @@ amt_vs_idv <- function(xpdb,
                        title      = 'Compartments amount vs. @x | @run',
                        subtitle   = 'Ofv: @ofv',
                        caption    = '@dir',
+                       tag        = NULL,
                        log        = NULL,
                        facets,
                        .problem,
@@ -61,5 +62,5 @@ amt_vs_idv <- function(xpdb,
                  xscale = check_scales('x', log), 
                  yscale = check_scales('y', log), 
                  title = title, subtitle = subtitle, caption = caption,
-                 plot_name = as.character(match.call()[[1]]))))
+                 tag = tag, plot_name = as.character(match.call()[[1]]))))
 }

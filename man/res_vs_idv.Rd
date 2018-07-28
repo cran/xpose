@@ -7,13 +7,13 @@
 \usage{
 res_vs_idv(xpdb, mapping = NULL, res = "CWRES", group = "ID",
   type = "pls", title = "@y vs. @x | @run", subtitle = "Ofv: @ofv",
-  caption = "@dir", log = NULL, guide = TRUE, facets, .problem, quiet,
-  ...)
+  caption = "@dir", tag = NULL, log = NULL, guide = TRUE, facets,
+  .problem, quiet, ...)
 
 absval_res_vs_idv(xpdb, mapping = NULL, res = "CWRES", group = "ID",
   type = "pls", title = "@y vs. @x  | @run", subtitle = "Ofv: @ofv",
-  caption = "@dir", log = NULL, guide = FALSE, facets, .problem, quiet,
-  ...)
+  caption = "@dir", tag = NULL, log = NULL, guide = FALSE, facets,
+  .problem, quiet, ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -33,6 +33,8 @@ line 'l', smooth 's' and text 't' or any combination of the four.}
 \item{subtitle}{Plot subtitle. Use \code{NULL} to remove.}
 
 \item{caption}{Page caption. Use \code{NULL} to remove.}
+
+\item{tag}{Plot identification tag. Use \code{NULL} to remove.}
 
 \item{log}{String assigning logarithmic scale to axes, can be either '', 
 'x', y' or 'xy'.}
@@ -80,7 +82,7 @@ any option supported by this layer e.g. point_color = 'blue', smooth_method = 'l
 \section{Template titles}{
 
 Template titles can be used to create highly informative diagnostics plots. 
-They can be applied to any plot title, subtitle and caption. Template titles 
+They can be applied to any plot title, subtitle, caption and tag. Template titles 
 are defined via a single string containing key variables staring with a `@` (e.g. `@ofv`)
 which will be replaced by their actual value when rendering the plot.
 For example `'@run, @nobs observations in @nind subjects'` would become 

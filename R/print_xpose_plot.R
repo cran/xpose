@@ -24,10 +24,22 @@ print.xpose_plot <- function(x, page, ...) {
   
   # Parse template titles
   if (is.xpose.plot(x)) {
-    var_map <- as.character(x$mapping)
-    x$labels$title <- append_suffix(x$xpose, x$labels$title, 'title')
+    # Add prefix to title subtitle, caption and tags
+    x$labels$title    <- append_suffix(x$xpose, x$labels$title, 'title')
     x$labels$subtitle <- append_suffix(x$xpose, x$labels$subtitle, 'subtitle')
     x$labels$caption  <- append_suffix(x$xpose, x$labels$caption, 'caption')
+    
+    if (utils::packageVersion('ggplot2') >= '3.0.0') {
+      x$labels$tag      <- append_suffix(x$xpose, x$labels$tag, 'tag')
+    }
+    
+    # Get the mapping variables keywords and values
+    var_map <- x$mapping %>% 
+      as.character() %>%
+      stringr::str_replace(pattern = '^~', replacement = '') %>% 
+      purrr::set_names(names(x$mapping))
+    
+    # Process the keywords
     x$labels <- x$labels %>% 
       purrr::map_if(stringr::str_detect(., '@'),
                     .f = parse_title, xpdb = x$xpose,
@@ -43,7 +55,8 @@ print.xpose_plot <- function(x, page, ...) {
   if (class(x$facet)[1] %in% c('FacetWrapPaginate', 'FacetGridPaginate')) {
     
     # Get total number of pages
-    page_tot <- n_pages(repair_facet(x))
+    #page_tot <- n_pages(repair_facet(x))
+    page_tot <- n_pages(x)
     
     # Get and check the page number to be drawn
     if (!missing(page)) {
@@ -76,7 +89,7 @@ print.xpose_plot <- function(x, page, ...) {
     if (n_page_2_draw == 1) {
       x %>% 
         paginate(page_2_draw, page_tot) %>% 
-        repair_facet() %>% 
+        #repair_facet() %>% 
         print.ggplot(...)
     } else {
       if (interactive() && !x$xpose$quiet) {
@@ -87,7 +100,7 @@ print.xpose_plot <- function(x, page, ...) {
         x$facet$params$page <- page_2_draw[p]
         x %>% 
           paginate(page_2_draw[p], page_tot) %>% 
-          repair_facet() %>% 
+          #repair_facet() %>% 
           print.ggplot(...)
         if (interactive() && !x$xpose$quiet) {
           utils::setTxtProgressBar(pb, value = p) # Update progress bar
@@ -113,7 +126,7 @@ print.xpose_plot <- function(x, page, ...) {
     # Print without multiple pages
     x %>% 
       paginate(page_2_draw = 1, page_tot = 1) %>% 
-      repair_facet() %>% 
+      #repair_facet() %>% 
       print.ggplot(...)
   }
 }
@@ -125,7 +138,7 @@ print.ggplot <- get('print.ggplot', envir = asNamespace('ggplot2'))
 # Add page number to pages
 paginate <- function(plot, page_2_draw, page_tot) {
   plot$labels <- plot$labels %>% 
-    purrr::map_if(stringr::str_detect(., '@(page|lastpage)'),
+    purrr::map_if(.p = ~!is.null(.) && stringr::str_detect(., '@(page|lastpage)'),
                   .f = parse_title, xpdb = plot$xpose,
                   problem = plot$xpose$problem, quiet = plot$xpose$quiet,
                   extra_key = c('page', 'lastpage'), 
@@ -135,13 +148,13 @@ paginate <- function(plot, page_2_draw, page_tot) {
 
 
 # Temporary fix for ggforce facet_wrap_paginate (may)
-repair_facet <- function(x) {
-  if (class(x$facet)[1] == 'FacetWrapPaginate' && 
-      !'nrow' %in% names(x$facet$params)) {
-    x$facet$params$nrow <- x$facet$params$max_row
-  }
-  x
-}
+# repair_facet <- function(x) {
+#   if (class(x$facet)[1] == 'FacetWrapPaginate' && 
+#       !'nrow' %in% names(x$facet$params)) {
+#     x$facet$params$nrow <- x$facet$params$max_row
+#   }
+#   x
+# }
 
 # Calculate the total number of pages
 n_pages <- function(plot) {

@@ -92,13 +92,27 @@ only_obs <- function(xpdb, .problem, quiet) {
 only_distinct <- function(xpdb, .problem, facets, quiet) {
   if (is.formula(facets)) facets <- all.vars(facets)
   vars <- c(xp_var(xpdb, .problem, type = c('id'))$col[1], facets)
-  string <- c('Removing duplicated rows based on: ', stringr::str_c(vars, collapse = ', '))
+  
+  
   fun <- function(x) {}
   body(fun) <- bquote({
-    msg(.(string), .(quiet))
-    dplyr::distinct_(.data = x, .dots = .(vars), .keep_all = TRUE)
+    
+    var_stg <- .(vars)
+    
+    # Silently remove "variable" when not in the data
+    if ('variable' %in% var_stg && !'variable' %in% colnames(x)) {
+      var_stg <- var_stg[-which(var_stg == 'variable')]
+    }
+    
+    msg_stg <- c('Removing duplicated rows based on: ', 
+                 stringr::str_c(var_stg, collapse = ', '))
+    msg(msg_stg, .(quiet))
+    
+    dplyr::distinct_(.data = x, .dots = var_stg, .keep_all = TRUE)
   })
+  
   fun
+  
 }
 
 

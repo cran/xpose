@@ -16,6 +16,7 @@
 #' 
 #' @export
 print.xpose_data <- function(x, ...) {
+  # Summarize estimation tables names
   if (!is.null(x$data) && any(!x$data$simtab)) {
     tab_names <- x$data %>% 
       dplyr::filter(.$simtab == FALSE) %>% 
@@ -28,6 +29,7 @@ print.xpose_data <- function(x, ...) {
     tab_names <- '<none>'
   }
   
+  # Summarize simulation tables names
   if (!is.null(x$data) && any(x$data$simtab)) {
     sim_names <- x$data %>% 
       dplyr::filter(.$simtab == TRUE) %>% 
@@ -40,6 +42,7 @@ print.xpose_data <- function(x, ...) {
     sim_names <- '<none>'
   }
   
+  # Summarize file names
   if (!is.null(x$files)) {
     out_names <- x$files %>% 
       dplyr::distinct_(.dots = 'name', .keep_all = TRUE) %>% 
@@ -49,6 +52,7 @@ print.xpose_data <- function(x, ...) {
     out_names <- '<none>'
   }
   
+  # Summarize special table names
   if (!is.null(x$special)) {
     special_names <- stringr::str_c(x$special$method, ' ', x$special$type, 
                                     ' (#', x$special$problem,
@@ -57,6 +61,12 @@ print.xpose_data <- function(x, ...) {
   } else {
     special_names <- '<none>'
   }
+  
+  # Summarize options
+  opt_names <- x$options %>% 
+    purrr::map_if(.p = is.null, 
+                  .f = function(x) {'NULL'}) %>% 
+                  {stringr::str_c(names(.), unlist(.), sep = ' = ', collapse = ', ')}
   
   cat(x$summary$value[x$summary$label == 'file'], 'overview:',
       '\n - Software:', x$summary$value[x$summary$label %in% c('software', 'version') & x$summary$value != 'na'],
@@ -67,7 +77,7 @@ print.xpose_data <- function(x, ...) {
       '\n   + special:', special_names,
       '\n - gg_theme:', attr(x$gg_theme, 'theme'),
       '\n - xp_theme:', attr(x$xp_theme, 'theme'),
-      '\n - Options:', stringr::str_c(names(x$options), x$options, sep = ' = ', collapse = ', '))
+      '\n - Options:', opt_names)
 }
 
 summarize_table_names <- function(dat) {

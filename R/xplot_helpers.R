@@ -87,7 +87,7 @@ check_scales <- function(scale, log) {
 #' @param xpdb An xpose database object.
 #' @param string A string to which the suffix will be appended.
 #' @param type A string determining what suffix type should be used 
-#' in the `xp_theme`. Can be one of `title`, `subtitle` or `caption`.
+#' in the `xp_theme`. Can be one of `title`, `subtitle`, `caption` or `tag`.
 #' 
 #' @return The modified `string`.
 #' 

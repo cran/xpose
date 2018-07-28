@@ -21,12 +21,13 @@
 #' @name xp_themes
 #' @export
 theme_xp_default <- function() {
-  structure(list(
+  tmp_theme <- list(
     # General
     rounding        = 1,
     title_suffix    = '',
     subtitle_suffix = '',
     caption_suffix  = '',
+    tag_suffix      = '',
     
     # Panels
     facets          = NULL,
@@ -113,20 +114,22 @@ theme_xp_default <- function() {
     area_fill        = 'grey35',
     area_size        = 0.5,
     area_linetype    = 1
-    
-  ), class = c('xpose_theme', 'uneval'))
+  )
+  
+  as.xpose.theme(tmp_theme)
 }
 
 #' @rdname xp_themes
 #' @export
 theme_xp_xpose4 <- function() {
-  structure(list(
+  tmp_theme <- list(
     
     # General
     rounding        = 1,
     title_suffix    = '',
     subtitle_suffix = '',
     caption_suffix  = '',
+    tag_suffix      = '',
     
     # Panels
     facets          = NULL,
@@ -213,6 +216,7 @@ theme_xp_xpose4 <- function() {
     area_fill        = 'grey35',
     area_size        = 0.5,
     area_linetype    = 1
-    
-  ), class = c('xpose_theme', 'uneval'))
+  )
+  
+  as.xpose.theme(tmp_theme)
 }

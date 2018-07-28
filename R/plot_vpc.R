@@ -16,6 +16,7 @@
 #' @param title Plot title. Use \code{NULL} to remove.
 #' @param subtitle Plot subtitle. Use \code{NULL} to remove.
 #' @param caption Page caption. Use \code{NULL} to remove.
+#' @param tag Plot identification tag. Use \code{NULL} to remove.
 #' @param log String assigning logarithmic scale to axes, can be either '', 
 #' 'x', y' or 'xy'.   
 #' @param guide Enable guide display in vpc continuous (e.g. lloq and uloq lines).
@@ -42,7 +43,6 @@
 #'   \item yscale: options to \code{scale_y_continuous} or \code{scale_y_log10}
 #' }
 #' @inheritSection xplot_scatter Faceting
-#' @inheritSection xplot_scatter Faceting
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{vpc_data}}
 #' @examples
@@ -58,6 +58,7 @@ vpc <- function(xpdb,
                 title    = 'Visual predictive checks | @run',
                 subtitle = 'Number of simulations: @vpcnsim, confidence interval: @vpcci%',
                 caption  = '@vpcdir',
+                tag      = NULL,
                 log      = NULL,
                 guide    = TRUE,
                 gg_theme,
@@ -249,6 +250,10 @@ vpc <- function(xpdb,
   # Add labels
   xp <- xp + labs(title = title, subtitle = subtitle, caption = caption)
   
+  if (utils::packageVersion('ggplot2') >= '3.0.0') {
+    xp <- xp + labs(tag = tag)
+  }
+  
   # Add limits whenever needed
   if (vpc_dat$type == 'categorical') xp <- xp + coord_cartesian(ylim = c(0, 1))
   
@@ -272,8 +277,9 @@ vpc <- function(xpdb,
           summary  = .,
           problem  = vpc_prob,
           quiet    = quiet,
-          xp_theme = xpdb$xp_theme[stringr::str_c(c('title', 'subtitle', 'caption'), '_suffix')])}
+          xp_theme = xpdb$xp_theme[stringr::str_c(c('title', 'subtitle', 
+                                                    'caption', 'tag'), '_suffix')])}
   
   # Ouptut the plot
-  structure(xp, class = c('xpose_plot', class(xp)))
+  as.xpose.plot(xp)
 }  

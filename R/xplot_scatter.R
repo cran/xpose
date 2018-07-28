@@ -14,6 +14,7 @@
 #' @param title Plot title. Use \code{NULL} to remove.
 #' @param subtitle Plot subtitle. Use \code{NULL} to remove.
 #' @param caption Page caption. Use \code{NULL} to remove.
+#' @param tag Plot identification tag. Use \code{NULL} to remove.
 #' @param plot_name Name to be used by \code{xpose_save()} when saving the plot.
 #' @param gg_theme A ggplot2 theme object (e.g. \code{\link[ggplot2]{theme_classic}}).
 #' @param xp_theme An xpose theme or vector of modifications to the xpose theme
@@ -58,7 +59,7 @@
 #' 
 #' @section Template titles:
 #' Template titles can be used to create highly informative diagnostics plots. 
-#' They can be applied to any plot title, subtitle and caption. Template titles 
+#' They can be applied to any plot title, subtitle, caption and tag. Template titles 
 #' are defined via a single string containing key variables staring with a `@` (e.g. `@ofv`)
 #' which will be replaced by their actual value when rendering the plot.
 #' For example `'@run, @nobs observations in @nind subjects'` would become 
@@ -80,6 +81,7 @@ xplot_scatter <- function(xpdb,
                           title     = NULL,
                           subtitle  = NULL,
                           caption   = NULL,
+                          tag       = NULL,
                           plot_name = 'scatter_plot',
                           gg_theme,
                           xp_theme,
@@ -177,6 +179,10 @@ xplot_scatter <- function(xpdb,
   # Add labels
   xp <- xp + labs(title = title, subtitle = subtitle, caption = caption)
   
+  if (utils::packageVersion('ggplot2') >= '3.0.0') {
+    xp <- xp + labs(tag = tag)
+  }
+  
   # Add metadata to plots
   xp$xpose <- list(fun      = plot_name,
                    summary  = xpdb$summary,
@@ -184,8 +190,9 @@ xplot_scatter <- function(xpdb,
                    subprob  = attr(data, 'subprob'),
                    method   = attr(data, 'method'),
                    quiet    = quiet,
-                   xp_theme = xpdb$xp_theme[stringr::str_c(c('title', 'subtitle', 'caption'), '_suffix')])
+                   xp_theme = xpdb$xp_theme[stringr::str_c(c('title', 'subtitle', 
+                                                             'caption', 'tag'), '_suffix')])
   
   # Ouptut the plot
-  structure(xp, class = c('xpose_plot', class(xp)))
+  as.xpose.plot(xp)
 }

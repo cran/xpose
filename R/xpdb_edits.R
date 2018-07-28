@@ -244,7 +244,7 @@ edit_xpose_data <- function(.fun, .fname, .data, ..., .problem, .source, .where)
     xpdb[['files']] <- xpdb[['files']] %>%
       dplyr::mutate(modified = dplyr::if_else(.$problem %in% .problem & .$extension %in% .source, TRUE, .$modified))
   }
-  xpdb
+  as.xpdb(xpdb) 
 }
 
 

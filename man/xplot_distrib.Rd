@@ -6,8 +6,8 @@
 \usage{
 xplot_distrib(xpdb, mapping = NULL, type = "hr", guide = FALSE,
   xscale = "continuous", yscale = "continuous", title = NULL,
-  subtitle = NULL, caption = NULL, plot_name = "density_plot", gg_theme,
-  xp_theme, opt, quiet, ...)
+  subtitle = NULL, caption = NULL, tag = NULL,
+  plot_name = "density_plot", gg_theme, xp_theme, opt, quiet, ...)
 }
 \arguments{
 \item{xpdb}{An \code{xpose_data} object generated with \code{\link{xpose_data}}.}
@@ -29,6 +29,8 @@ density 'd', rug 'r' or any combination of the three.}
 \item{subtitle}{Plot subtitle. Use \code{NULL} to remove.}
 
 \item{caption}{Page caption. Use \code{NULL} to remove.}
+
+\item{tag}{Plot identification tag. Use \code{NULL} to remove.}
 
 \item{plot_name}{Name to be used by \code{xpose_save()} when saving the plot.}
 
@@ -85,7 +87,7 @@ when using the \code{facets} argument in \code{xp_theme} variable is automatical
 \section{Template titles}{
 
 Template titles can be used to create highly informative diagnostics plots. 
-They can be applied to any plot title, subtitle and caption. Template titles 
+They can be applied to any plot title, subtitle, caption and tag. Template titles 
 are defined via a single string containing key variables staring with a `@` (e.g. `@ofv`)
 which will be replaced by their actual value when rendering the plot.
 For example `'@run, @nobs observations in @nind subjects'` would become 

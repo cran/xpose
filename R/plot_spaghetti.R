@@ -26,6 +26,7 @@ dv_vs_idv <- function(xpdb,
                       title    = '@y vs. @x | @run',
                       subtitle = 'Ofv: @ofv',
                       caption  = '@dir',
+                      tag      = NULL,
                       log      = NULL,
                       facets,
                       .problem,
@@ -47,7 +48,7 @@ dv_vs_idv <- function(xpdb,
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
-                plot_name = as.character(match.call()[[1]]), ...)
+                tag = tag, plot_name = as.character(match.call()[[1]]), ...)
 }
 
 
@@ -61,6 +62,7 @@ ipred_vs_idv <- function(xpdb,
                          title    = '@y vs. @x | @run',
                          subtitle = 'Ofv: @ofv, Eps shrink: @epsshk',
                          caption  = '@dir',
+                         tag      = NULL,
                          log      = NULL,
                          .problem,
                          quiet,
@@ -81,7 +83,7 @@ ipred_vs_idv <- function(xpdb,
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
-                plot_name = as.character(match.call()[[1]]), ...)
+                tag = tag, plot_name = as.character(match.call()[[1]]), ...)
 }
 
 
@@ -95,6 +97,7 @@ pred_vs_idv <- function(xpdb,
                         title    = '@y vs. @x | @run',
                         subtitle = 'Ofv: @ofv',
                         caption  = '@dir',
+                        tag      = NULL,
                         log      = NULL,
                         .problem,
                         quiet,
@@ -115,7 +118,7 @@ pred_vs_idv <- function(xpdb,
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
-                plot_name = as.character(match.call()[[1]]), ...)
+                tag = tag, plot_name = as.character(match.call()[[1]]), ...)
 }
 
 
@@ -132,6 +135,7 @@ dv_preds_vs_idv <- function(xpdb,
                             title    = 'Observations, Individual predictions and Population predictions vs. @x | @run',
                             subtitle = 'Ofv: @ofv, Eps shrink: @epsshk',
                             caption  = '@dir',
+                            tag      = NULL,
                             log      = NULL,
                             .problem,
                             quiet,
@@ -155,6 +159,6 @@ dv_preds_vs_idv <- function(xpdb,
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
-                plot_name = as.character(match.call()[[1]]), ...)
+                tag = tag, plot_name = as.character(match.call()[[1]]), ...)
 }
 

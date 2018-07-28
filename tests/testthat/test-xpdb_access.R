@@ -92,9 +92,12 @@ test_that('get_file works properly', {
 })
 
 test_that('get_file is quiet when option is set in xpdb', {
-  # ensure option is set
-  xpdb_ex_pk$options$quiet <- TRUE
-  expect_silent(get_file(xpdb_ex_pk, file = 'run001.ext'))
+  # Change quiet to TRUE
+  xpdb_quiet <- xpdb_ex_pk
+  xpdb_quiet$options$quiet <- TRUE
+  xpdb_quiet <- as.xpdb(xpdb_quiet)
+  
+  expect_silent(get_file(xpdb_quiet, file = 'run001.ext'))
 })
 
 
@@ -124,6 +127,8 @@ test_that('get_summary works properly', {
 test_that('get_prm checks input properly', {
   xpdb_no_ext <- xpdb_ex_pk
   xpdb_no_ext$files <- xpdb_no_ext$files[xpdb_no_ext$files$extension != 'ext', ]
+  xpdb_no_ext <- as.xpdb(xpdb_no_ext)
+  
   # Error with missing xpdb
   expect_error(get_prm(), regexp = '"xpdb" is missing')
   
@@ -135,6 +140,8 @@ test_that('get_prm checks input properly', {
                regexp = 'No parameter estimates found for \\$prob no\\.99')
   
   xpdb_wo_cov <- purrr::modify_at(xpdb_ex_pk, 'files', ~dplyr::filter(.x, extension != 'cov'))
+  xpdb_wo_cov <- as.xpdb(xpdb_wo_cov)
+  
   expect_warning(get_prm(xpdb_wo_cov, quiet = TRUE), 
                  regex = 'Covariance matrix.+not available')
 })

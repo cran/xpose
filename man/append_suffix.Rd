@@ -12,7 +12,7 @@ append_suffix(xpdb, string = NULL, type = NULL)
 \item{string}{A string to which the suffix will be appended.}
 
 \item{type}{A string determining what suffix type should be used 
-in the `xp_theme`. Can be one of `title`, `subtitle` or `caption`.}
+in the `xp_theme`. Can be one of `title`, `subtitle`, `caption` or `tag`.}
 }
 \value{
 The modified `string`.

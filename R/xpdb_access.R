@@ -492,7 +492,7 @@ get_prm_transformation_formulas <- function(prm_names) {
     purrr::map_if(~purrr::is_character(.x) && stringr::str_detect(.x, '^(OMEGA|SIGMA)\\((\\d+),\\2\\)$'), 
                   ~substitute(~sqrt(par), list(par = rlang::sym(.x)))) %>% 
     purrr::map_if(~purrr::is_character(.x) && stringr::str_detect(.x, '^(OMEGA|SIGMA)\\(\\d+,\\d+\\)$'), 
-                  ~substitute(~cov/(sqrt(var1)/sqrt(var2)), 
+                  ~substitute(~cov/(sqrt(var1)*sqrt(var2)), 
                               list(cov = rlang::sym(.x),
                                    var1 = stringr::str_replace(.x, '\\((\\d+),(\\d+)\\)', 
                                                                '(\\1,\\1)') %>% rlang::sym(),

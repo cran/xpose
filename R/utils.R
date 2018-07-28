@@ -73,8 +73,27 @@ ggforce::facet_grid_paginate
 #' 
 #' @keywords internal
 #' @export
-is.xp.theme <- function(x) {
+is.xpose.theme <- function(x) {
   inherits(x, 'xpose_theme')
+}
+
+
+#' Convert an object to `xpose_theme` class
+#' 
+#' @description Adds `xpose_theme` attribute to an object
+#' 
+#' @param x An object to be modified.
+#' 
+#' @return x with `xpose_theme` class.
+#' 
+#' @keywords internal
+#' @export
+as.xpose.theme <- function(x) {
+  if (!is.xpose.theme(x)) {
+    structure(x, class = c('xpose_theme', 'uneval'))
+  } else {
+    x
+  }
 }
 
 
@@ -94,6 +113,25 @@ is.xpdb <- function(x) {
 }
 
 
+#' Convert an object to `xpose_data` class
+#' 
+#' @description Adds `xpose_data` attribute to an object
+#' 
+#' @param x An object to be modified.
+#' 
+#' @return x with `xpose_data` class.
+#' 
+#' @keywords internal
+#' @export
+as.xpdb <- function(x) {
+  if (!is.xpdb(x)) {
+    structure(x, class = c('xpose_data', 'uneval'))
+  } else {
+    x
+  }
+}
+
+
 #' Test for nm_model class
 #' 
 #' @description Reports whether x is a `nm_model` object
@@ -108,6 +146,7 @@ is.xpdb <- function(x) {
 is.nm.model <- function(x) {
   inherits(x, 'nm_model')
 }
+
 
 #' Test for nm_table_list class
 #' 
@@ -136,7 +175,11 @@ is.nm.table.list <- function(x) {
 #' @keywords internal
 #' @export
 as.nm.table.list <- function(x) {
-  structure(x, class = c('nm_table_list', class(x)))
+  if (!is.nm.table.list(x)) {
+    structure(x, class = c('nm_table_list', class(x)))
+  } else {
+    x
+  }
 }
 
 
@@ -153,6 +196,25 @@ as.nm.table.list <- function(x) {
 #' @export
 is.xpose.plot <- function(x) {
   inherits(x, 'xpose_plot')
+}
+
+
+#' Convert an object to `xpose_plot` class
+#' 
+#' @description Adds `xpose_plot` attribute to an object
+#' 
+#' @param x An object to be modified.
+#' 
+#' @return x with `xpose_plot` class.
+#' 
+#' @keywords internal
+#' @export
+as.xpose.plot <- function(x) {
+  if (!is.xpose.plot(x)) {
+    structure(x, class = c('xpose_plot', class(x)))
+  } else {
+    x
+  }
 }
 
 

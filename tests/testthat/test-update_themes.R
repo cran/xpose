@@ -4,6 +4,7 @@ context('Check update_theme')
 # Define custom theme -----------------------------------------------------
 theme_xp_custom <- theme_xp_default()
 theme_xp_custom$point_color <- 'green'
+theme_xp_custom <- as.xpose.theme(theme_xp_custom)
 
 
 # Tests start here --------------------------------------------------------

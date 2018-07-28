@@ -11,24 +11,24 @@
 \usage{
 prm_qq(xpdb, mapping = NULL, drop_fixed = TRUE, type = "p",
   title = "QQ plot of parameters | @run",
-  subtitle = "Based on @nind individuals", caption = "@dir", log = NULL,
-  guide = TRUE, facets, .problem, quiet, ...)
+  subtitle = "Based on @nind individuals", caption = "@dir", tag = NULL,
+  log = NULL, guide = TRUE, facets, .problem, quiet, ...)
 
 eta_qq(xpdb, mapping = NULL, drop_fixed = TRUE, type = "p",
   title = "QQ plot of etas | @run",
   subtitle = "Based on @nind individuals, Eta shrink: @etashk",
-  caption = "@dir", log = NULL, guide = TRUE, facets, .problem, quiet,
-  ...)
+  caption = "@dir", tag = NULL, log = NULL, guide = TRUE, facets,
+  .problem, quiet, ...)
 
 res_qq(xpdb, mapping = NULL, res = "CWRES", type = "p",
   title = "QQ plot of @sample | @run",
-  subtitle = "Based on @nobs observations", caption = "@dir", log = NULL,
-  guide = TRUE, facets, .problem, quiet, ...)
+  subtitle = "Based on @nobs observations", caption = "@dir", tag = NULL,
+  log = NULL, guide = TRUE, facets, .problem, quiet, ...)
 
 cov_qq(xpdb, mapping = NULL, drop_fixed = TRUE, type = "p",
   title = "QQ plot of continuous covariates | @run",
-  subtitle = "Based on @nind individuals", caption = "@dir", log = NULL,
-  guide = TRUE, facets, .problem, quiet, ...)
+  subtitle = "Based on @nind individuals", caption = "@dir", tag = NULL,
+  log = NULL, guide = TRUE, facets, .problem, quiet, ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -46,6 +46,8 @@ cov_qq(xpdb, mapping = NULL, drop_fixed = TRUE, type = "p",
 \item{subtitle}{Plot subtitle. Use \code{NULL} to remove.}
 
 \item{caption}{Page caption. Use \code{NULL} to remove.}
+
+\item{tag}{Plot identification tag. Use \code{NULL} to remove.}
 
 \item{log}{String assigning logarithmic scale to axes, can be either '', 
 'x', y' or 'xy'.}
@@ -104,7 +106,7 @@ when using the \code{facets} argument in \code{xp_theme} variable is automatical
 \section{Template titles}{
 
 Template titles can be used to create highly informative diagnostics plots. 
-They can be applied to any plot title, subtitle and caption. Template titles 
+They can be applied to any plot title, subtitle, caption and tag. Template titles 
 are defined via a single string containing key variables staring with a `@` (e.g. `@ofv`)
 which will be replaced by their actual value when rendering the plot.
 For example `'@run, @nobs observations in @nind subjects'` would become 

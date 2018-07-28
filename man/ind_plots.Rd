@@ -8,10 +8,10 @@ the independent variable for every individual}
 ind_plots(xpdb, mapping = NULL, group = "variable", type = "lp",
   title = "Individual plots | @run",
   subtitle = "Ofv: @ofv, Eps shrink: @epsshk",
-  caption = "@dir | Page @page of @lastpage", log = NULL, facets, .problem,
-  quiet, color = c("grey60", "deepskyblue4", "deepskyblue3"),
-  point_alpha = c(0.8, 0, 0), line_linetype = c("blank", "solid", "55"),
-  ...)
+  caption = "@dir | Page @page of @lastpage", tag = NULL, log = NULL,
+  facets, .problem, quiet, color = c("grey60", "deepskyblue4",
+  "deepskyblue3"), point_alpha = c(0.8, 0, 0), line_linetype = c("blank",
+  "solid", "55"), ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}
@@ -29,6 +29,8 @@ line 'l', smooth 's' and text 't' or any combination of the four.}
 \item{subtitle}{Plot subtitle. Use \code{NULL} to remove.}
 
 \item{caption}{Page caption. Use \code{NULL} to remove.}
+
+\item{tag}{Plot identification tag. Use \code{NULL} to remove.}
 
 \item{log}{String assigning logarithmic scale to axes, can be either '', 
 'x', y' or 'xy'.}
@@ -97,7 +99,7 @@ when using the \code{facets} argument in \code{xp_theme} variable is automatical
 \section{Template titles}{
 
 Template titles can be used to create highly informative diagnostics plots. 
-They can be applied to any plot title, subtitle and caption. Template titles 
+They can be applied to any plot title, subtitle, caption and tag. Template titles 
 are defined via a single string containing key variables staring with a `@` (e.g. `@ofv`)
 which will be replaced by their actual value when rendering the plot.
 For example `'@run, @nobs observations in @nind subjects'` would become 
