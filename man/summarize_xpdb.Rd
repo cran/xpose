@@ -3,11 +3,8 @@
 \name{summarize_xpdb}
 \alias{summarize_xpdb}
 \alias{group_by.xpose_data}
-\alias{summarize_xpdb}
 \alias{ungroup.xpose_data}
-\alias{summarize_xpdb}
 \alias{summarize.xpose_data}
-\alias{summarize_xpdb}
 \alias{summarise.xpose_data}
 \title{Group/ungroup and summarize variables in an xpdb}
 \usage{

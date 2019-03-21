@@ -62,7 +62,7 @@ These messages can be silenced with the option `quiet = TRUE`.
 xpose is compatible with the `$TABLE FIRSTONLY` option of NONMEM. The option `FIRSTONLY` only output the first record for each `ID` and hence can be used to decrease the size of output tables having no time-varying columns. During tables import xpose will merge `FIRSTONLY` tables with regular tables allowing seamless use of columns from `FIRSTONLY` in plots.
 
 ##### Compressed tables
-xpose makes use of the [readr](http://readr.tidyverse.org) which offers the advantages of 1) rapidly import big tables and 2) automatically import compressed table (e.g. sdtab001.zip) to increase storage capacity.
+xpose makes use of the [readr](https://readr.tidyverse.org) which offers the advantages of 1) rapidly import big tables and 2) automatically import compressed table (e.g. sdtab001.zip) to increase storage capacity.
 
 
 #### Others NLME tools

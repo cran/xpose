@@ -15,13 +15,9 @@ options(width = 100)
 
 xpdb <- xpdb_ex_pk
 
-knitr::opts_chunk$set(fig.dpi = 96,
-                      fig.align = 'center', 
-                      fig.height = 4, 
-                      fig.width = 4,
-                      out.width = '75%',
-                      comment = '',
-                      message = FALSE)
+knitr::opts_chunk$set(out.width = '75%',
+                      comment   = '',
+                      message   = FALSE)
 ```
 
 The xpose package was designed as a standardized interface between model outputs and R. Hence model output files can easily be imported in R and used to summarize data or create plots.

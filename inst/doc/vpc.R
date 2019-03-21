@@ -1,13 +1,13 @@
 ## ---- include = FALSE----------------------------------------------------
 library(xpose)
 
-knitr::opts_chunk$set(fig.dpi = 96,
-fig.align = 'center', 
-fig.height = 4, 
-fig.width = 6,
-out.width = '75%',
-comment = '',
-message = FALSE)
+knitr::opts_chunk$set(fig.dpi    = 96,
+                      fig.align  = 'center', 
+                      fig.height = 4, 
+                      fig.width  = 6,
+                      out.width  = '75%',
+                      comment    = '',
+                      message    = FALSE)
 
 ## ------------------------------------------------------------------------
 xpdb_ex_pk %>% 

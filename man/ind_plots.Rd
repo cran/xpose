@@ -10,8 +10,8 @@ ind_plots(xpdb, mapping = NULL, group = "variable", type = "lp",
   subtitle = "Ofv: @ofv, Eps shrink: @epsshk",
   caption = "@dir | Page @page of @lastpage", tag = NULL, log = NULL,
   facets, .problem, quiet, color = c("grey60", "deepskyblue4",
-  "deepskyblue3"), point_alpha = c(0.8, 0, 0), line_linetype = c("blank",
-  "solid", "55"), ...)
+  "deepskyblue3"), point_alpha = c(0.8, 0, 0),
+  line_linetype = c("blank", "solid", "55"), ...)
 }
 \arguments{
 \item{xpdb}{An xpose database object.}

@@ -3,9 +3,7 @@
 \name{subset_xpdb}
 \alias{subset_xpdb}
 \alias{filter.xpose_data}
-\alias{subset_xpdb}
 \alias{slice.xpose_data}
-\alias{subset_xpdb}
 \alias{distinct.xpose_data}
 \title{Subset datasets in an xpdb}
 \usage{

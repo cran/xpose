@@ -3,9 +3,7 @@
 \name{modify_xpdb}
 \alias{modify_xpdb}
 \alias{mutate.xpose_data}
-\alias{modify_xpdb}
 \alias{select.xpose_data}
-\alias{modify_xpdb}
 \alias{rename.xpose_data}
 \title{Add, remove or rename variables in an xpdb}
 \usage{

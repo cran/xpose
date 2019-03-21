@@ -222,7 +222,7 @@ read_funs <- function(fun) {
 #' @param x A list containing a the 3 first records of a 
 #' dataset under `[[1]]`.
 #' @param quiet Should messages be displayed to the console.
-#' @param col_types Defines the type of each to be passed to 
+#' @param col_types Defines the type of each column to be passed to 
 #' the `readr` import function.
 #' @param na Character string defining the values to be treated as `NA`.
 #' @param comment Character string defining the value to mark comments.

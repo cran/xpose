@@ -3,9 +3,7 @@
 \name{list_xpdb}
 \alias{list_xpdb}
 \alias{list_data}
-\alias{list_xpdb}
 \alias{list_files}
-\alias{list_xpdb}
 \alias{list_special}
 \title{List available datasets}
 \usage{

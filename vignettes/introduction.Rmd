@@ -4,7 +4,7 @@ author: "Benjamin Guiastrennec"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Workflow}
+  %\VignetteIndexEntry{Introduction}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -13,15 +13,15 @@ vignette: >
 library(xpose)
 
 xpdb <- xpdb_ex_pk %>% 
-set_var_types(idv = 'TIME')
+  set_var_types(idv = 'TIME')
 
-knitr::opts_chunk$set(fig.dpi = 96,
-fig.align = 'center', 
-fig.height = 4, 
-fig.width = 4,
-out.width = '50%',
-comment = '',
-message = FALSE)
+knitr::opts_chunk$set(fig.dpi    = 96,
+                      fig.align  = 'center', 
+                      fig.height = 4, 
+                      fig.width  = 4,
+                      out.width  = '50%',
+                      comment    = '',
+                      message    = FALSE)
 ```
 
 
@@ -69,7 +69,7 @@ list_vars(xpdb)
 ```
 
 ### Pipes
-`xpose` makes use of the pipe operator `%>%` from the package [dplyr](http://dplyr.tidyverse.org). Pipes can be used to generate clear workflow.
+`xpose` makes use of the pipe operator `%>%` from the package [dplyr](https://dplyr.tidyverse.org). Pipes can be used to generate clear workflow.
 
 ```{r, eval = FALSE}
 xpose_data(runno = '001') %>% 

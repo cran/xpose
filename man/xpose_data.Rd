@@ -5,9 +5,9 @@
 \title{Import NONMEM output into R}
 \usage{
 xpose_data(runno = NULL, prefix = "run", ext = ".lst", file = NULL,
-  dir = NULL, gg_theme = theme_readable(), xp_theme = theme_xp_default(),
-  simtab = NULL, manual_import = NULL, ignore = NULL, extra_files, quiet,
-  ...)
+  dir = NULL, gg_theme = theme_readable(),
+  xp_theme = theme_xp_default(), simtab = NULL, manual_import = NULL,
+  ignore = NULL, extra_files, quiet, ...)
 }
 \arguments{
 \item{runno}{Run number to be used to generate model file name. Used in combination with \code{prefix} and \code{ext}.}
@@ -40,7 +40,7 @@ combination of the three.}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 
-\item{...}{Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions.}
+\item{...}{Additional arguments to be passed to the \code{\link{read_nm_tables}} functions.}
 }
 \description{
 Gather model outputs into a R database

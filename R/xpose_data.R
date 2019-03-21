@@ -20,7 +20,7 @@
 #' @param extra_files A vector of additional output file extensions to be imported. Default is '.ext', '.cov', '.cor', '.phi', 
 #' ".grd" for NONMEM.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
-#' @param ... Additional arguments to be passed to the \code{\link[readr]{read_delim}} functions.
+#' @param ... Additional arguments to be passed to the \code{\link{read_nm_tables}} functions.
 #' 
 #' @section File path generation:
 #' The rules for model file names generation are as follow:
@@ -66,7 +66,7 @@ xpose_data <- function(runno         = NULL,
                        xp_theme      = theme_xp_default(),
                        simtab        = NULL,
                        manual_import = NULL,
-                       ignore          = NULL,
+                       ignore        = NULL,
                        extra_files,
                        quiet,
                        ...) {
@@ -169,4 +169,10 @@ xpose_data <- function(runno         = NULL,
     structure(class = c('xpose_data', 'uneval'))
 }
 
-
+# Allow assignment into xpose_data without conversion to class uneval
+# `[[<-.xpose_data` <- function(x, i, value) {
+#   x <- unclass(x)
+#   x[[i]] <- value
+#   as.xpdb(x)
+# }
+# `$<-.xpose_data` <- `[[<-.xpose_data`

@@ -11,7 +11,7 @@ test_file <- c('TABLE NO.  4',
                '  1.1200E+02, 4.1061E+00, 2.1792E+01, 1.2183E+02, 2.0796E-01,-4.9451E-02, 1.2194E-01,-2.3484E-02')
 
 ctrl_file <- get_data(xpdb_ex_pk, table = 'patab001') %>% 
-  dplyr::distinct_(.dots = 'ID', .keep_all = TRUE) %>% 
+  dplyr::distinct(!!sym('ID'), .keep_all = TRUE) %>% 
   dplyr::slice(1:2) %>% 
   dplyr::mutate(ID = factor(.$ID, levels = c(110, 112)))
 
@@ -54,7 +54,8 @@ test_that('error is returned when missing table header', {
 })
 
 test_that('dot arguments are properly passed to readr', {
-  expect_equal(nrow(read_nm_tables(file = 'sdtab001', dir = 'data', n_max = 3, quiet = TRUE)), 3)
+  # Note: n_max is now 4 instead of 3 as readr now automatically ignores blank lines (i.e. the column name row in this case)
+  expect_equal(nrow(read_nm_tables(file = 'sdtab001', dir = 'data', n_max = 4, quiet = TRUE)), 3)
 })
 
 test_that('returns a tibble when user mode is used', {
@@ -65,7 +66,9 @@ test_that('returns a tibble when user mode is used', {
 })
 
 test_that('tables with firstonly are properly handled', {
-  expect_message(tmp_table <- read_nm_tables(firstonly_test, quiet = FALSE), regexp = 'Consolidating|Joining')
+  expect_message({
+    tmp_table <- read_nm_tables(firstonly_test, quiet = FALSE)
+  }, regexp = 'Consolidating|Joining')
   
   skip_on_cran() # Skip to avoid issue with no long double
   

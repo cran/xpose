@@ -2,15 +2,15 @@
 library(xpose)
 
 xpdb <- xpdb_ex_pk %>% 
-set_var_types(idv = 'TIME')
+  set_var_types(idv = 'TIME')
 
-knitr::opts_chunk$set(fig.dpi = 96,
-fig.align = 'center', 
-fig.height = 4, 
-fig.width = 4,
-out.width = '50%',
-comment = '',
-message = FALSE)
+knitr::opts_chunk$set(fig.dpi    = 96,
+                      fig.align  = 'center', 
+                      fig.height = 4, 
+                      fig.width  = 4,
+                      out.width  = '50%',
+                      comment    = '',
+                      message    = FALSE)
 
 ## ----demo print xpose_data-----------------------------------------------
 xpdb # or print(xpdb)

@@ -13,7 +13,7 @@ dataset under `[[1]]`.}
 
 \item{quiet}{Should messages be displayed to the console.}
 
-\item{col_types}{Defines the type of each to be passed to 
+\item{col_types}{Defines the type of each column to be passed to 
 the `readr` import function.}
 
 \item{na}{Character string defining the values to be treated as `NA`.}

@@ -5,13 +5,13 @@ xpdb <- xpdb_ex_pk %>%
  vpc_data(opt = vpc_opt(n_bins = 7)) %>% 
  mutate(VAR = 1)
 
-knitr::opts_chunk$set(fig.dpi = 96,
-                      fig.align = 'center', 
+knitr::opts_chunk$set(fig.dpi    = 96,
+                      fig.align  = 'center', 
                       fig.height = 4, 
-                      fig.width = 4,
-                      out.width = '50%',
-                      comment = '',
-                      message = FALSE)
+                      fig.width  = 4,
+                      out.width  = '50%',
+                      comment    = '',
+                      message    = FALSE)
 
 ## ----demo type scatter, echo = FALSE, fig.height = 6, fig.width = 6, out.width = '75%'----
 gridExtra::grid.arrange(

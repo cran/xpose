@@ -321,7 +321,7 @@ drop_fixed_cols <- function(xpdb, .problem, cols, quiet) {
   
   # Get the column names to be removed
   cols_rm <- get_data(xpdb, .problem = .problem) %>% 
-    dplyr::select_(.dots = cols) %>%
+    dplyr::select_at(cols) %>%
     dplyr::select_if(.predicate = function(x) length(unique(x)) == 1) %>% 
     colnames()
   if (length(cols_rm) == 0) return(cols)

@@ -5,8 +5,8 @@
 \title{NONMEM output table import function}
 \usage{
 read_nm_tables(file = NULL, dir = NULL, combined = TRUE,
-  rm_duplicates = TRUE, quiet = FALSE, simtab = NULL, ziptab = TRUE,
-  ...)
+  rm_duplicates = TRUE, quiet = FALSE, simtab = NULL,
+  ziptab = TRUE, ...)
 }
 \arguments{
 \item{file}{A character vector of path to the files or a \code{nm_table_list} object created with \code{list_nm_tables}.}
