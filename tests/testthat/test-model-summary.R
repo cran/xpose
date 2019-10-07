@@ -48,8 +48,8 @@ test_that('summary is properly created with the appropriate information', {
   #expect_equal(sum_out(sum_esampleseed(model, software)), c('esampleseed', 'na'))
   expect_equal(sum_out(sum_ofv(model, software)), c('ofv', '-1403.905'))
   expect_equal(sum_out(sum_method(model, software), 1), c('method', 'foce-i'))
-  expect_equal(sum_out(sum_method(model = dplyr::data_frame(problem = 1L, level = 1L, subroutine = 'est', 
-                                                     code = 'METH=0', comment = ''), software), 1), c('method', 'fo'))
+  expect_equal(sum_out(sum_method(model = dplyr::tibble(problem = 1L, level = 1L, subroutine = 'est', 
+                                                        code = 'METH=0', comment = ''), software), 1), c('method', 'fo'))
   expect_equal(sum_out(sum_method(model, software), 2), c('method', 'sim'))
   expect_equal(sum_out(sum_shk(model, software, 'eps', rounding)), c('epsshk', '14.86 [1]'))
   expect_equal(sum_out(sum_shk(model, software, 'eta', rounding)), c('etashk', '9.33 [1], 28.71 [2], 23.65 [3]'))
@@ -71,9 +71,9 @@ test_that('summary default summary is returned for missing information', {
   expect_equal(sum_out(sum_subroutine(model2, software)), c('subroutine', 'na'))
   expect_equal(sum_out(sum_runtime(model2, software)), c('runtime', 'na'))
   expect_equal(sum_out(sum_covtime(model2, software)), c('covtime', 'na'))
-  expect_equal(sum_out(sum_covtime(model = dplyr::data_frame(problem = 1L, level = 1L, subroutine = 'lst', 
-                                                             code = 'Elapsed covariance time in seconds: ********', 
-                                                             comment = ''), software), 1), c('covtime', 'na'))
+  expect_equal(sum_out(sum_covtime(model = dplyr::tibble(problem = 1L, level = 1L, subroutine = 'lst', 
+                                                         code = 'Elapsed covariance time in seconds: ********', 
+                                                         comment = ''), software), 1), c('covtime', 'na'))
   expect_equal(sum_out(sum_term(model2, software)), c('term', 'na'))
   expect_equal(sum_out(sum_warnings(model2, software)), c('warnings', 'na'))
   expect_equal(sum_out(sum_errors(model2, software)), c('errors', 'na'))

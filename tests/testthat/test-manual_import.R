@@ -7,7 +7,7 @@ ctrl_str <- list(tab_suffix = '',
 ctrl_data <- xpose_data(file = 'run001.lst', dir = 'data', ignore = c('files', 'summary'), 
                         quiet = TRUE)$data$index[[1]] %>% 
   dplyr::filter(.$table == 'sdtab001') %>% 
-  dplyr::arrange_(.dots = 'table')
+  dplyr::arrange_at(.vars = 'table')
 
 # Tests start here --------------------------------------------------------
 test_that('manual_nm_import function works properly', {
@@ -24,6 +24,6 @@ test_that('list_nm_tables_manual function works properly', {
   test <- xpose_data(file = 'run001.lst', dir = 'data', ignore = c('files', 'summary'),
                      manual_import = manual_nm_import(tab_names = 'sdtab'), 
                      quiet = FALSE)$data$index[[1]]
-  test <- dplyr::arrange_(.data = test, .dots = 'table')
+  test <- dplyr::arrange_at(.tbl = test, .vars = 'table')
   expect_identical(test, ctrl_data)
 })

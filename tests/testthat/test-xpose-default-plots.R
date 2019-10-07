@@ -97,12 +97,12 @@ test_that('faceting works properly', {
   expect_true(is.list(d2$facet$params$facets))
   expect_true(is.list(q2$facet$params$facets))
   
-  expect_equal(as.character(p3$facet$params$cols[[1]])[2], 'SEX')   # Improve ?
-  expect_equal(as.character(p3$facet$params$rows[[1]])[2], 'MED2')  # Improve ?
-  expect_equal(as.character(d3$facet$params$cols[[1]])[2], 'SEX')   # Improve ?
-  expect_equal(as.character(d3$facet$params$rows[[1]])[2], 'MED2')  # Improve ?
-  expect_equal(as.character(q3$facet$params$cols[[1]])[2], 'SEX')   # Improve ?
-  expect_equal(as.character(q3$facet$params$rows[[1]])[2], 'MED2')  # Improve ?
+  expect_equal(rlang::quo_name(p3$facet$params$cols[[1]]), 'SEX')
+  expect_equal(rlang::quo_name(p3$facet$params$rows[[1]]), 'MED2')
+  expect_equal(rlang::quo_name(d3$facet$params$cols[[1]]), 'SEX')
+  expect_equal(rlang::quo_name(d3$facet$params$rows[[1]]), 'MED2')
+  expect_equal(rlang::quo_name(q3$facet$params$cols[[1]]), 'SEX')
+  expect_equal(rlang::quo_name(q3$facet$params$rows[[1]]), 'MED2')
 })
 
 test_that('xpose_geom mapping works properly', {

@@ -21,8 +21,9 @@ print.xpose_data <- function(x, ...) {
     tab_names <- x$data %>% 
       dplyr::filter(.$simtab == FALSE) %>% 
       dplyr::mutate(grouping = 1:n()) %>% 
-      dplyr::group_by_(.dots = 'grouping') %>% 
+      dplyr::group_by_at(.vars = 'grouping') %>% 
       tidyr::nest() %>% 
+      dplyr::ungroup() %>% 
       dplyr::mutate(string = purrr::map_chr(.$data, summarize_table_names)) %>% 
       {stringr::str_c(.$string, collapse = '\n               ')}
   } else {
@@ -34,8 +35,9 @@ print.xpose_data <- function(x, ...) {
     sim_names <- x$data %>% 
       dplyr::filter(.$simtab == TRUE) %>% 
       dplyr::mutate(grouping = 1:n()) %>% 
-      dplyr::group_by_(.dots = 'grouping') %>% 
+      dplyr::group_by_at(.vars = 'grouping') %>% 
       tidyr::nest() %>% 
+      dplyr::ungroup() %>% 
       dplyr::mutate(string = purrr::map_chr(.$data, summarize_table_names)) %>% 
       {stringr::str_c(.$string, collapse = '\n               ')}
   } else {
@@ -45,8 +47,8 @@ print.xpose_data <- function(x, ...) {
   # Summarize file names
   if (!is.null(x$files)) {
     out_names <- x$files %>% 
-      dplyr::distinct_(.dots = 'name', .keep_all = TRUE) %>% 
-      dplyr::arrange_(.dots = c('name')) %>% 
+      dplyr::distinct(!!rlang::sym('name'), .keep_all = TRUE) %>% 
+      dplyr::arrange_at(.vars = 'name') %>% 
       {stringr::str_c(.$name, ifelse(.$modified, ' (modified)', ''), collapse = ', ')}
   } else {
     out_names <- '<none>'

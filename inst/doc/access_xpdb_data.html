@@ -7,6 +7,7 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -95,7 +96,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -302,7 +303,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 <h1 class="title toc-ignore">Access the xpdb data</h1>
 <h4 class="author">Benjamin Guiastrennec</h4>
-<h4 class="date">19 March, 2019</h4>
+<h4 class="date">07 October, 2019</h4>
 
 
 
@@ -313,7 +314,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">xpdb <span class="co"># or print(xpdb)</span></a></code></pre></div>
 <pre><code>run001.lst overview: 
  - Software: nonmem 7.3.0 
- - Attached files (memory usage 1.4 Mb): 
+ - Attached files (memory usage 1.3 Mb): 
    + obs tabs: $prob no.1: catab001.csv, cotab001, patab001, sdtab001 
    + sim tabs: $prob no.2: simtab001.zip 
    + output files: run001.cor, run001.cov, run001.ext, run001.grd, run001.phi, run001.shk 
@@ -448,6 +449,9 @@ Estimates for $prob no.1, subprob no.0, method foce
 12       0       0 Software version    version     7.3.0                        </code></pre>
 </div>
 
+
+
+<!-- code folding -->
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

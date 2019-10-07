@@ -16,13 +16,12 @@
 #' @param caption Page caption. Use \code{NULL} to remove.
 #' @param tag Plot identification tag. Use \code{NULL} to remove.
 #' @param plot_name Name to be used by \code{xpose_save()} when saving the plot.
-#' @param gg_theme A ggplot2 theme object (e.g. \code{\link[ggplot2]{theme_classic}}).
-#' @param xp_theme An xpose theme or vector of modifications to the xpose theme
-#' (e.g. \code{c(point_color = 'red', line_linetype = 'dashed')}).
 #' @param opt A list of options in order to create appropriate data input for 
 #' ggplot2. For more information see \code{\link{data_opt}}.
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' @param ... Any additional aesthetics.
+#' 
+#' @inheritParams update_themes
 #' 
 #' @section Layers mapping:
 #' Plots can be customized by mapping arguments to specific layers. The naming convention is 
@@ -106,9 +105,18 @@ xplot_scatter <- function(xpdb,
   # Check type
   check_plot_type(type, allowed = c('l', 'p', 's', 't'))
   
-  # Assing xp_theme and gg_theme
+  # Assign xp_theme
   if (!missing(xp_theme)) xpdb <- update_themes(xpdb = xpdb, xp_theme = xp_theme)
-  if (missing(gg_theme)) gg_theme <- xpdb$gg_theme
+  
+  # Assign gg_theme
+  if (missing(gg_theme)) {
+    gg_theme <- xpdb$gg_theme
+  } else {
+    gg_theme <- update_themes(xpdb = xpdb, gg_theme = gg_theme)$gg_theme 
+  }
+  if (is.function(gg_theme)) {
+    gg_theme <- do.call(gg_theme, args = list())
+  }
   
   # Create ggplot base
   xp <- ggplot(data = data, mapping) + gg_theme 

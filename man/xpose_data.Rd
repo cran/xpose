@@ -5,63 +5,78 @@
 \title{Import NONMEM output into R}
 \usage{
 xpose_data(runno = NULL, prefix = "run", ext = ".lst", file = NULL,
-  dir = NULL, gg_theme = theme_readable(),
+  dir = NULL, gg_theme = theme_readable,
   xp_theme = theme_xp_default(), simtab = NULL, manual_import = NULL,
   ignore = NULL, extra_files, quiet, ...)
 }
 \arguments{
-\item{runno}{Run number to be used to generate model file name. Used in combination with \code{prefix} and \code{ext}.}
+\item{runno}{Run number to be used to generate model file name. Used in
+combination with \code{prefix} and \code{ext}.}
 
-\item{prefix}{Prefix to be used to generate model file name. Used in combination with \code{runno} and \code{ext}.}
+\item{prefix}{Prefix to be used to generate model file name. Used in
+combination with \code{runno} and \code{ext}.}
 
-\item{ext}{Extension to be used to generate model file name.Should be one of '.lst' (default), '.out', '.res', '.mod' or '.ctl' for NONMEM.}
+\item{ext}{Extension to be used to generate model file name.Should be one of
+'.lst' (default), '.out', '.res', '.mod' or '.ctl' for NONMEM.}
 
-\item{file}{Model file name (preferably a '.lst' file) containing the file extension. Alternative to \code{prefix},
-\code{runno} and \code{ext} arguments.}
+\item{file}{Model file name (preferably a '.lst' file) containing the file
+extension. Alternative to \code{prefix}, \code{runno} and \code{ext}
+arguments.}
 
 \item{dir}{Location of the model files.}
 
-\item{gg_theme}{A ggplot2 theme object (e.g. \code{\link[ggplot2]{theme_classic}}).}
+\item{gg_theme}{A complete ggplot2 theme object (e.g.
+\code{\link[ggplot2]{theme_classic}}), or a function returning a complete
+ggplot2 theme.}
 
-\item{xp_theme}{An xpose theme or vector of modifications to the xpose theme
-(e.g. \code{c(point_color = 'red', line_linetype = 'dashed')}).}
+\item{xp_theme}{A complete xpose theme object (e.g.
+\code{\link{theme_xp_default}}).}
 
-\item{simtab}{If \code{TRUE} only reads in simulation tables, if \code{FALSE} only reads estimation tables. 
-Default \code{NULL} reads all tables. Option not compatible with manual_import.}
+\item{simtab}{If \code{TRUE} only reads in simulation tables, if \code{FALSE}
+only reads estimation tables. Default \code{NULL} reads all tables. Option
+not compatible with manual_import.}
 
-\item{manual_import}{If \code{NULL} (default) the names of the output tables to import will be obtained from the model file. 
-To manually import files as in previous versions of xpose, the check the function \code{\link{manual_nm_import}}.}
+\item{manual_import}{If \code{NULL} (default) the names of the output tables
+to import will be obtained from the model file. To manually import files as
+in previous versions of xpose, the check the function
+\code{\link{manual_nm_import}}.}
 
-\item{ignore}{Character vector be used to ignore the import/generation of: 'data', 'files', 'summary' or any
-combination of the three.}
+\item{ignore}{Character vector be used to ignore the import/generation of:
+'data', 'files', 'summary' or any combination of the three.}
 
-\item{extra_files}{A vector of additional output file extensions to be imported. Default is '.ext', '.cov', '.cor', '.phi', 
-".grd" for NONMEM.}
+\item{extra_files}{A vector of additional output file extensions to be
+imported. Default is '.ext', '.cov', '.cor', '.phi', ".grd" for NONMEM.}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 
-\item{...}{Additional arguments to be passed to the \code{\link{read_nm_tables}} functions.}
+\item{...}{Additional arguments to be passed to the
+\code{\link{read_nm_tables}} functions.}
 }
 \description{
 Gather model outputs into a R database
 }
 \section{File path generation}{
-
-The rules for model file names generation are as follow:
-\itemize{
-  \item with \code{runno}: the full path is generated as \code{<dir>/<prefix><runno>.<ext>} e.g. with \code{dir = 'model/pk'}, \code{prefix = 'run'}, \code{runno = '001'}, 
-  \code{ext = '.lst'} the resulting path would be \code{model/pk/run001.lst}
-  \item with \code{file}: the full path is generated as \code{<dir>/<file>} e.g. with \code{dir = 'model/pk'}, \code{file = 'run001.lst'} the resulting path
-  would also be \code{model/pk/run001.lst}. Note: in this case the file extension should be provided as part of the `file` argument.
+ The rules for model file names generation are
+  as follow: \itemize{ 
+  \item with \code{runno}: the full path is generated as
+  \code{<dir>/<prefix><runno>.<ext>} e.g. with \code{dir = 'model/pk'},
+  \code{prefix = 'run'}, \code{runno = '001'}, \code{ext = '.lst'} the
+  resulting path would be \code{model/pk/run001.lst} 
+  \item with \code{file}:
+  the full path is generated as \code{<dir>/<file>} e.g. with \code{dir =
+  'model/pk'}, \code{file = 'run001.lst'} the resulting path would also be
+  \code{model/pk/run001.lst}. Note: in this case the file extension should be
+  provided as part of the `file` argument.
   }
 }
 
 \section{Table format requirement}{
-
-When importing data, an \code{ID} column must be present in at least one table for each problem and for each `firstonly` 
-category. \code{ID} columns are required to properly combine/merge tables and removing \code{NA} records. If 
-\code{ID} columns are missing xpose will return the following warning: \code{Dropped `<tablenames>` due to missing 
-required `ID` column.}.
+ When importing data, an \code{ID} column
+  must be present in at least one table for each problem and for each
+  `firstonly` category. \code{ID} columns are required to properly
+  combine/merge tables and removing \code{NA} records. If \code{ID} columns
+  are missing xpose will return the following warning: \code{Dropped
+  `<tablenames>` due to missing required `ID` column.}
 }
 
 \examples{

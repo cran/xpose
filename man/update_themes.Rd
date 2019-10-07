@@ -7,30 +7,34 @@
 update_themes(xpdb = NULL, gg_theme = NULL, xp_theme = NULL, quiet)
 }
 \arguments{
-\item{xpdb}{An \code{xpose_data} object generated with \code{\link{xpose_data}}.}
+\item{xpdb}{An \code{xpose_data} object generated with
+\code{\link{xpose_data}}.}
 
-\item{gg_theme}{A ggplot2 theme object (e.g. \code{\link[ggplot2]{theme_classic}}).}
+\item{gg_theme}{A complete ggplot2 theme object (e.g.
+\code{\link[ggplot2]{theme_classic}}), a function returning a complete
+ggplot2 theme, or a change to the current \code{gg_theme}.}
 
-\item{xp_theme}{An xpose theme or vector of modifications to the xpose theme
-(e.g. \code{c(point_color = 'red', line_linetype = 'dashed')}).}
+\item{xp_theme}{A complete xpose theme object (e.g.
+\code{\link{theme_xp_default}}) or a list of modifications to the current
+\code{xp_theme} (e.g. \code{list(point_color = 'red', line_linetype =
+'dashed')}).}
 
 \item{quiet}{Logical, if \code{FALSE} messages are printed to the console.}
 }
 \description{
-Create an xpose theme.
-This function will update the theme of an xpdb object.
-All plots generated with this xpdb will automatically use the
-defined xpose (\code{xp_theme}) and ggplot2 (\code{gg_theme}) themes.
+Create an xpose theme. This function will update the theme of an
+  xpdb object. All plots generated with this xpdb will automatically use the
+  defined xpose (\code{xp_theme}) and ggplot2 (\code{gg_theme}) themes.
 }
 \examples{
 # Before default theme
 dv_vs_ipred(xpdb_ex_pk, facets = 'SEX')
 
 # Updating the gg_theme and xp_theme
-xpdb_ex_pk \%>\% 
-  update_themes(gg_theme = theme_bw(),
+xpdb_ex_pk \%>\%
+  update_themes(gg_theme = theme(legend.position = 'top'),
                 xp_theme = list(point_color = 'blue',
-                                line_color  = 'blue')) \%>\% 
+                                line_color  = 'blue')) \%>\%
   dv_vs_ipred(facets = 'SEX')
-  
+
 }

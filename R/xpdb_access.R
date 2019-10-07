@@ -93,20 +93,40 @@ get_data <- function(xpdb,
     # When selecting tables based on their name
     full_index <- x %>% 
       dplyr::select(dplyr::one_of('problem', 'index')) %>% 
-      tidyr::unnest_(unnest_cols = 'index')
+      tidyr::unnest(dplyr::one_of('index'))
     
     if (any(!table %in% full_index$table)) {
       stop(stringr::str_c(table[!table %in% full_index$table], collapse = ', '), 
            ' not found in model output data.', call. = FALSE) 
     }
     x <- full_index[full_index$table %in% table, ] %>% 
-      dplyr::group_by_(.dots = c('problem', 'table')) %>% 
-      tidyr::nest(.key = 'tmp') %>% 
+      dplyr::group_by_at(.vars = c('problem', 'table'))
+    
+    ## TEMP handling
+    if (tidyr_new_interface()) {
+      x <- x %>% tidyr::nest(tmp = -dplyr::one_of('problem', 'table'))
+    } else {
+      x <- x %>% tidyr::nest(.key = 'tmp')
+    }
+    ## END TEMP
+    
+    x <- x %>% 
+      dplyr::ungroup() %>% 
       dplyr::mutate(cols = purrr::map(.$tmp, ~.$col)) %>% 
-      dplyr::group_by_(.dots = 'table') %>% 
-      tidyr::nest(.key = 'tmp') %>% 
+      dplyr::group_by_at(.vars = 'table')
+    
+    ## TEMP handling
+    if (tidyr_new_interface()) {
+      x <- x %>% tidyr::nest(tmp = -dplyr::one_of('table'))
+    } else {
+      x <- x %>% tidyr::nest(.key = 'tmp')
+    }
+    ## END TEMP
+    
+    x <- x %>% 
+      dplyr::ungroup() %>% 
       dplyr::mutate(out = purrr::map(.$tmp, function(y) {
-        x[x$problem == y$problem, ]$data[[1]][, y$cols[[1]]]
+        xpdb$data[xpdb$data$problem == y$problem, ]$data[[1]][, y$cols[[1]]]
       }))
     
     if (length(unique(x$table)) > 1) {
@@ -383,8 +403,8 @@ get_prm <- function(xpdb,
         prms <- purrr::map_df(prm_trans_formula, ~transform_prm(.x, mu = prm_mean, sigma = prm_cov, method = 'delta')) %>% 
           dplyr::mutate(se = sqrt(.$variance))
       } else {
-        prms <- dplyr::data_frame(mean = purrr::flatten_dbl(prm_mean), 
-                                  se   = purrr::flatten_dbl(prm_se)) %>% 
+        prms <- dplyr::tibble(mean = purrr::flatten_dbl(prm_mean), 
+                              se   = purrr::flatten_dbl(prm_se)) %>% 
           dplyr::mutate(rse = .$se/abs(.$mean))
       }
       
@@ -399,7 +419,7 @@ get_prm <- function(xpdb,
                       rse    = ifelse(.$fixed, NA_real_, abs(as.numeric(.$rse)))) %>%
         tidyr::separate(col = 'number', into = c('m', 'n'), sep = ',', fill = 'right') %>% 
         dplyr::mutate(diagonal = dplyr::if_else(.$m == .$n, TRUE, FALSE)) %>% 
-        dplyr::rename_(.dots = list(value = 'mean')) %>% 
+        dplyr::rename(!!rlang::sym('value') := !!rlang::sym('mean')) %>% 
         dplyr::mutate(label = '',
                       value = signif(.$value, digits = digits),
                       se    = signif(.$se, digits = digits),
@@ -409,7 +429,7 @@ get_prm <- function(xpdb,
                       order = dplyr::case_when(type == 'the' ~ 1,
                                                type == 'ome' ~ 2,
                                                TRUE ~ 3)) %>% 
-        dplyr::arrange_(.dots = 'order') %>% 
+        dplyr::arrange_at(.vars = 'order') %>% 
         dplyr::select(dplyr::one_of('type', 'name', 'label', 'value', 'se', 'rse', 'fixed', 'diagonal', 'm', 'n'))
       
       # Assign THETA labels

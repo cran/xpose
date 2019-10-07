@@ -108,7 +108,7 @@ only_distinct <- function(xpdb, .problem, facets, quiet) {
                  stringr::str_c(var_stg, collapse = ', '))
     msg(msg_stg, .(quiet))
     
-    dplyr::distinct_(.data = x, .dots = var_stg, .keep_all = TRUE)
+    dplyr::distinct(.data = x, !!!rlang::syms(var_stg), .keep_all = TRUE)
   })
   
   fun
@@ -141,13 +141,13 @@ reorder_factors <- function(prefix, suffix = NULL) {
     # Only sort factors
     function(x) {
       levels <- x %>%
-        dplyr::distinct_(.dots = 'variable') %>%
+        dplyr::distinct(!!rlang::sym('variable')) %>%
         dplyr::mutate(variable_order = substring(.$variable, 1, 2)) %>%
         dplyr::mutate(variable_order = dplyr::case_when(.$variable_order == 'TH' ~ 1,
                                                         .$variable_order == 'OM' ~ 2,
                                                         .$variable_order == 'SI' ~ 3,
                                                         TRUE ~ 0)) %>%
-        dplyr::arrange_(.dots = 'variable_order')
+        dplyr::arrange_at(.vars = 'variable_order')
       
       dplyr::mutate(.data = x, variable = factor(x$variable, levels = levels$variable))
     }
@@ -212,9 +212,10 @@ fetch_data <- function(xpdb,
                    stringr::str_c(stringr::str_c(index_col[1:5], collapse = ', '), 
                                   '... and', length(index_col) - 5 , 'more variables', sep = ' '),
                    stringr::str_c(index_col , collapse = ', ')) %>%
-                   {msg(c('Tidying data by ', .), quiet)}
-    data <- tidyr::gather_(data = data, key_col = 'variable', value_col = 'value',
-                           gather_cols = colnames(data)[!colnames(data) %in% index_col])
+      {msg(c('Tidying data by ', .), quiet)}
+    
+    data <- tidyr::gather(data = data, key = 'variable', value = 'value',
+                          !!!rlang::syms(colnames(data)[!colnames(data) %in% index_col]))
   }
   
   if (is.function(post_processing)) data <- post_processing(data)

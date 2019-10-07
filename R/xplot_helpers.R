@@ -383,9 +383,9 @@ xp_var <- function(xpdb, .problem, col = NULL, type = NULL, silent = FALSE) {
   }
   
   index %>% 
-    dplyr::distinct_(.dots = 'col', .keep_all = TRUE) %>% 
+    dplyr::distinct(!!rlang::sym('col'), .keep_all = TRUE) %>% 
     dplyr::select(dplyr::one_of('col', 'type', 'label', 'units')) %>% 
-    dplyr::arrange_(.dots = c('type', 'col'))
+    dplyr::arrange_at(.vars = c('type', 'col'))
 }
 
 

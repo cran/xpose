@@ -15,7 +15,7 @@ Status](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.t
 ## Overview
 
 [xpose](https://UUPharmacometrics.github.io/xpose/) was designed as a
-[ggplot2](https://github.com/tidyverse/ggplot2)-based alternative to
+[ggplot2](https://ggplot2.tidyverse.org/)-based alternative to
 [xpose4](http://xpose.sourceforge.net). xpose aims to reduce the post
 processing burden and improve diagnostics commonly associated the
 development of non-linear mixed effect models.
@@ -53,7 +53,7 @@ xpdb
 
     run001.lst overview: 
      - Software: nonmem 7.3.0 
-     - Attached files (memory usage 1.4 Mb): 
+     - Attached files (memory usage 1.3 Mb): 
        + obs tabs: $prob no.1: catab001.csv, cotab001, patab001, sdtab001 
        + sim tabs: $prob no.2: simtab001.zip 
        + output files: run001.cor, run001.cov, run001.ext, run001.grd, run001.phi, run001.shk 
@@ -160,7 +160,8 @@ several useful articles to make full use of xpose
 When working with xpose, a working knowledge of ggplot2 is recommended.
 Help for ggplot2 can be found in:
 
-  - The ggplot2 [documentation](https://docs.ggplot2.org/current/)
+  - The ggplot2
+    [documentation](https://ggplot2.tidyverse.org/reference/)
   - The ggplot2 [mailing
     list](https://groups.google.com/forum/?fromgroups#!forum/ggplot2)
   - Internet resources (stack overflow, etc.)
@@ -168,6 +169,8 @@ Help for ggplot2 can be found in:
 ## Contribute
 
 Please note that the xpose project is released with a [Contributor Code
-of Conduct](.github/CODE_OF_CONDUCT.md) and [contributing
-guidelines](.github/CONTRIBUTING.md). By contributing to this project,
-you agree to abide these.
+of
+Conduct](https://github.com/UUPharmacometrics/xpose/blob/master/.github/CODE_OF_CONDUCT.md)
+and [Contributing
+Guidelines](https://github.com/UUPharmacometrics/xpose/blob/master/.github/CONTRIBUTING.md).
+By contributing to this project, you agree to abide these.

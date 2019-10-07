@@ -152,8 +152,9 @@ vpc_data <- function(xpdb,
     purrr::map_at('vpc_dat', function(x) {
       x <- x %>% 
         tidyr::gather(key = 'tmp', value = 'value', dplyr::matches('\\.(low|med|up)')) %>% 
-        tidyr::separate_('tmp', into = c('Simulations', 'ci'), sep = '\\.') %>% 
-        tidyr::spread_(key_col = 'ci', value_col = 'value')
+        tidyr::separate(col = !!rlang::sym('tmp'), 
+                        into = c('Simulations', 'ci'), sep = '\\.') %>% 
+        tidyr::spread(key = 'ci', value = 'value')
       
       if (vpc_type == 'continuous') {
         x <- dplyr::mutate(.data = x, 
@@ -202,7 +203,7 @@ vpc_data <- function(xpdb,
            obs_cols = obs_cols, sim_cols = sim_cols, nsim = vpc_nsim)) %>%
            {dplyr::tibble(problem = vpc_prob, method = 'vpc', type = vpc_type, data = list(.), modified = FALSE)} %>%
            {dplyr::bind_rows(xpdb$special, .)} %>% 
-    dplyr::distinct_(.dots = c('problem', 'method', 'type'), .keep_all = TRUE)
+    dplyr::distinct(!!!rlang::syms(c('problem', 'method', 'type')), .keep_all = TRUE)
   
   msg('\nVPC done', quiet)
   as.xpdb(xpdb)

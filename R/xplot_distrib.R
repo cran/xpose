@@ -64,9 +64,18 @@ xplot_distrib <- function(xpdb,
   # Check type
   check_plot_type(type, allowed = c('d', 'h', 'r'))
   
-  # Assing xp_theme and gg_theme
+  # Assign xp_theme
   if (!missing(xp_theme)) xpdb <- update_themes(xpdb = xpdb, xp_theme = xp_theme)
-  if (missing(gg_theme)) gg_theme <- xpdb$gg_theme
+  
+  # Assign gg_theme
+  if (missing(gg_theme)) {
+    gg_theme <- xpdb$gg_theme
+  } else {
+    gg_theme <- update_themes(xpdb = xpdb, gg_theme = gg_theme)$gg_theme 
+  }
+  if (is.function(gg_theme)) {
+    gg_theme <- do.call(gg_theme, args = list())
+  }
   
   # Create ggplot base
   xp <- ggplot(data = data, aes_filter(mapping, keep_only = c('x', 'y'))) + gg_theme 

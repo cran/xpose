@@ -34,10 +34,14 @@ density 'd', rug 'r' or any combination of the three.}
 
 \item{plot_name}{Name to be used by \code{xpose_save()} when saving the plot.}
 
-\item{gg_theme}{A ggplot2 theme object (e.g. \code{\link[ggplot2]{theme_classic}}).}
+\item{gg_theme}{A complete ggplot2 theme object (e.g.
+\code{\link[ggplot2]{theme_classic}}), a function returning a complete
+ggplot2 theme, or a change to the current \code{gg_theme}.}
 
-\item{xp_theme}{An xpose theme or vector of modifications to the xpose theme
-(e.g. \code{c(point_color = 'red', line_linetype = 'dashed')}).}
+\item{xp_theme}{A complete xpose theme object (e.g.
+\code{\link{theme_xp_default}}) or a list of modifications to the current
+\code{xp_theme} (e.g. \code{list(point_color = 'red', line_linetype =
+'dashed')}).}
 
 \item{opt}{A list of options in order to create appropriate data input for 
 ggplot2. For more information see \code{\link{data_opt}}.}

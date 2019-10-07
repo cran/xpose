@@ -62,13 +62,23 @@ set_var_types <- function(xpdb, .problem = NULL, ..., auto_factor = TRUE, quiet)
   if (is.null(args)) return(xpdb)
   
   args <- args %>%
-    dplyr::data_frame(col = ., type = names(.)) %>% 
+    dplyr::tibble(col = ., type = names(.)) %>% 
     dplyr::mutate(type = stringr::str_replace(.$type, '\\d$', ''))
   
-  xpdb$data <- dat %>% 
+  dat <- dat %>% 
     dplyr::mutate(grouping = .$problem) %>% 
-    dplyr::group_by_(.dots = 'grouping') %>% 
-    tidyr::nest(.key = 'tmp') %>% 
+    dplyr::group_by_at(.vars = 'grouping')
+  
+  ## TEMP handling
+  if (tidyr_new_interface()) {
+    dat <- dat %>% tidyr::nest(tmp = -dplyr::one_of('grouping'))
+  } else {
+    dat <- dat %>% tidyr::nest(.key = 'tmp')
+  }
+  ## END TEMP
+  
+  xpdb$data <- dat %>% 
+    dplyr::ungroup() %>% 
     dplyr::mutate(out = purrr::map_if(.$tmp, .$grouping %in% .problem, function(x, args, quiet) {
       # Get the index
       index <- x$index[[1]]
@@ -76,8 +86,8 @@ set_var_types <- function(xpdb, .problem = NULL, ..., auto_factor = TRUE, quiet)
       # Check for missmatches
       if (any(!args$col %in% index$col)) {
         warning(c('In $prob no.', x$problem, ' columns: ',
-              stringr::str_c(args$col[!args$col %in% index$col], collapse = ', '),
-              ' not present in the data.'), call. = FALSE)
+                  stringr::str_c(args$col[!args$col %in% index$col], collapse = ', '),
+                  ' not present in the data.'), call. = FALSE)
         args <- dplyr::filter(.data = args, args$col %in% index$col)
       }
       
@@ -90,7 +100,7 @@ set_var_types <- function(xpdb, .problem = NULL, ..., auto_factor = TRUE, quiet)
       for (repl in 1:nrow(args)) {
         index$type[index$col == args$col[repl]] <- args$type[repl]
       }
-       x$index[[1]] <- index
+      x$index[[1]] <- index
       
       # Change categorical covariates to factor
       if (any(args$type == 'catcov') && auto_factor) {
@@ -102,7 +112,7 @@ set_var_types <- function(xpdb, .problem = NULL, ..., auto_factor = TRUE, quiet)
       # Output new index
       x
     }, args = args, quiet = quiet)) %>% 
-    tidyr::unnest_(unnest_cols = 'out') %>% 
+    tidyr::unnest(dplyr::one_of('out')) %>% 
     dplyr::select(dplyr::one_of('problem', 'simtab', 'index', 'data', 'modified'))
   
   as.xpdb(xpdb)
@@ -125,12 +135,22 @@ set_var_generic <- function(xpdb, .problem = NULL, what = NULL, ..., quiet) {
   args <- c(...)
   if (is.null(args)) return(xpdb)
   
-  args <- dplyr::data_frame(col = names(args), variable = args)
+  args <- dplyr::tibble(col = names(args), variable = args)
+  
+  dat <- dat %>% 
+    dplyr::mutate(grouping = .$problem) %>% 
+    dplyr::group_by_at(.vars = 'grouping')
+  
+  ## TEMP handling
+  if (tidyr_new_interface()) {
+    dat <- dat %>% tidyr::nest(tmp = -dplyr::one_of('grouping'))
+  } else {
+    dat <- dat %>% tidyr::nest(.key = 'tmp')
+  }
+  ## END TEMP
   
   xpdb$data <- dat %>% 
-    dplyr::mutate(grouping = .$problem) %>% 
-    dplyr::group_by_(.dots = 'grouping') %>% 
-    tidyr::nest(.key = 'tmp') %>% 
+    dplyr::ungroup() %>% 
     dplyr::mutate(out = purrr::map_if(.$tmp, .$grouping %in% .problem, function(x, args, quiet) {
       # Get the index
       index <- x$index[[1]]
@@ -138,8 +158,8 @@ set_var_generic <- function(xpdb, .problem = NULL, what = NULL, ..., quiet) {
       # Check for missmatches
       if (any(!args$col %in% index$col)) {
         warning(c('In $prob no.', x$problem, ' columns: ',
-              stringr::str_c(args$col[!args$col %in% index$col], collapse = ', '),
-              ' not present in the data.'), call. = FALSE)
+                  stringr::str_c(args$col[!args$col %in% index$col], collapse = ', '),
+                  ' not present in the data.'), call. = FALSE)
         args <- dplyr::filter(.data = args, args$col %in% index$col)
       }
       
@@ -150,7 +170,7 @@ set_var_generic <- function(xpdb, .problem = NULL, what = NULL, ..., quiet) {
       # Output new index
       x
     }, args = args, quiet = quiet)) %>% 
-    tidyr::unnest_(unnest_cols = 'out') %>% 
+    tidyr::unnest(dplyr::one_of('out')) %>% 
     dplyr::select(dplyr::one_of('problem', 'simtab', 'index', 'data', 'modified'))
   
   as.xpdb(xpdb)

@@ -20,13 +20,12 @@
 #' @param log String assigning logarithmic scale to axes, can be either '', 
 #' 'x', y' or 'xy'.   
 #' @param guide Enable guide display in vpc continuous (e.g. lloq and uloq lines).
-#' @param gg_theme A ggplot2 theme object (e.g. \code{\link[ggplot2]{theme_classic}}).
-#' @param xp_theme An xpose theme or vector of modifications to the xpose theme
-#' (e.g. \code{c(point_color = 'red', line_linetype = 'dashed')}).
 #' @param area_fill Shaded areas filling color, should be a vector of 3 values (i.e. low, med, high).
 #' @param line_linetype Lines linetype, should be a vector of 3 values (i.e. low, med, high).
 #' @param quiet Logical, if \code{FALSE} messages are printed to the console.
 #' @param ... any additional aesthetics.
+#' 
+#' @inheritParams update_themes
 #' 
 #' @section Layers mapping:
 #' Plots can be customized by mapping arguments to specific layers. The naming convention is 
@@ -116,9 +115,18 @@ vpc <- function(xpdb,
   # Check type
   check_plot_type(type, allowed = c('a', 'l', 'p', 'r', 't'))
   
-  # Assing xp_theme and gg_theme
+  # Assign xp_theme
   if (!missing(xp_theme)) xpdb <- update_themes(xpdb = xpdb, xp_theme = xp_theme)
-  if (missing(gg_theme)) gg_theme <- xpdb$gg_theme
+  
+  # Assign gg_theme
+  if (missing(gg_theme)) {
+    gg_theme <- xpdb$gg_theme
+  } else {
+    gg_theme <- update_themes(xpdb = xpdb, gg_theme = gg_theme)$gg_theme 
+  }
+  if (is.function(gg_theme)) {
+    gg_theme <- do.call(gg_theme, args = list())
+  }
   
   # Create ggplot base
   if (is.null(mapping)) mapping <- aes()
@@ -234,10 +242,10 @@ vpc <- function(xpdb,
                               name     = 'rug',
                               ggfun    = 'geom_rug',
                               rug_data =  vpc_dat$aggr_obs %>% 
-                                dplyr::distinct_(.dots = c('bin', stratify), .keep_all = TRUE) %>% 
+                                dplyr::distinct(!!!rlang::syms(c('bin', stratify)), .keep_all = TRUE) %>% 
                                 dplyr::filter(!is.na(.$bin)) %>% 
                                 tidyr::gather(key = 'edges', value = 'idv', dplyr::one_of('bin_min', 'bin_max')) %>% 
-                                dplyr::distinct_(.dots = c(stratify, 'idv'), .keep_all = TRUE))
+                                dplyr::distinct(!!!rlang::syms(c(stratify, 'idv')), .keep_all = TRUE))
                        ))
   }
   
@@ -263,15 +271,15 @@ vpc <- function(xpdb,
     scale_linetype_manual(values = line_linetype)
   
   # Add metadata to plots
-  xp$xpose <- dplyr::data_frame(problem = vpc_prob, subprob = 0L, 
-                                descr = c('VPC directory', 'Number of simulations for VPC', 
-                                          'VPC confidence interval', 'VPC prediction interval', 
-                                          'VPC lower limit of quantification', 'VPC upper limit of quantification'),
-                                label = c('vpcdir', 'vpcnsim', 'vpcci', 'vpcpi', 'vpclloq', 'vpculoq'),
-                                value = c(vpc_dat$vpc_dir, vpc_dat$nsim, 
-                                          100*diff(vpc_dat$opt$ci), 100*diff(vpc_dat$opt$pi),
-                                          ifelse(is.null(vpc_dat$lloq), 'na', vpc_dat$lloq),
-                                          ifelse(is.null(vpc_dat$uloq), 'na', vpc_dat$uloq))) %>% 
+  xp$xpose <- dplyr::tibble(problem = vpc_prob, subprob = 0L, 
+                            descr = c('VPC directory', 'Number of simulations for VPC', 
+                                      'VPC confidence interval', 'VPC prediction interval', 
+                                      'VPC lower limit of quantification', 'VPC upper limit of quantification'),
+                            label = c('vpcdir', 'vpcnsim', 'vpcci', 'vpcpi', 'vpclloq', 'vpculoq'),
+                            value = c(vpc_dat$vpc_dir, vpc_dat$nsim, 
+                                      100*diff(vpc_dat$opt$ci), 100*diff(vpc_dat$opt$pi),
+                                      ifelse(is.null(vpc_dat$lloq), 'na', vpc_dat$lloq),
+                                      ifelse(is.null(vpc_dat$uloq), 'na', vpc_dat$uloq))) %>% 
     dplyr::bind_rows(xpdb$summary) %>% 
     {list(fun = stringr::str_c('vpc_', vpc_dat$type),
           summary  = .,

@@ -19,7 +19,7 @@ test_that('only_obs function works properly', {
 test_that('only_distinct function works properly', {
   expect_true(is.function(only_distinct(xpdb_ex_pk, .problem = 1, facets = 'DOSE', quiet = TRUE)))
   expect_equal(only_distinct(xpdb_ex_pk, .problem = 1, facets = 'DOSE', quiet = TRUE)(x = xpdb_ex_pk$data$data[[1]]),
-               dplyr::distinct_(.data = xpdb_ex_pk$data$data[[1]], .dots = c('ID', 'DOSE'), .keep_all = TRUE))
+               dplyr::distinct(.data = xpdb_ex_pk$data$data[[1]], !!!rlang::syms(c('ID', 'DOSE')), .keep_all = TRUE))
 })
 
 test_that('reorder_etas_factors function works properly', {
@@ -49,8 +49,8 @@ test_that('fetch_data can tidy data', {
   expect_equal(imported_tidy_data, 
                xpdb_ex_pk$data$data[[1]][xpdb_ex_pk$data$data[[1]]$EVID == 0, 
                                          c('ID', 'TIME', 'IPRED', 'PRED', 'DV')] %>% 
-                 tidyr::gather_(value_col = 'value', key_col = 'variable', 
-                                gather_cols = c('IPRED', 'PRED', 'DV'))
+                 tidyr::gather(value = 'value', key = 'variable', 
+                              !!!rlang::syms(c('IPRED', 'PRED', 'DV')))
   )
 })
 

@@ -97,8 +97,8 @@ psn_vpc_parser <- function(xpdb, psn_folder, psn_bins, opt, quiet) {
     # Get list of options from PsN
     psn_opt <- readr::read_lines(file = file_path(psn_folder, 'version_and_option_info.txt')) 
     psn_cmd <- psn_opt[which(stringr::str_detect(psn_opt, '^Command:')) + 1]
-    psn_opt <- dplyr::data_frame(raw = psn_opt[stringr::str_detect(psn_opt,'^-')]) %>% 
-      tidyr::separate_(col = 'raw', into = c('arg', 'value'), sep = '=') %>% 
+    psn_opt <- dplyr::tibble(raw = psn_opt[stringr::str_detect(psn_opt,'^-')]) %>% 
+      tidyr::separate(col = 'raw', into = c('arg', 'value'), sep = '=') %>% 
       dplyr::mutate(arg = stringr::str_replace(.$arg, '^-', ''))
     
     # Sets obs and sim cols

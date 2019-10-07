@@ -39,10 +39,14 @@ line 'l', area 'a', rug 'r' and text 't' or any combination of the five.}
 
 \item{guide}{Enable guide display in vpc continuous (e.g. lloq and uloq lines).}
 
-\item{gg_theme}{A ggplot2 theme object (e.g. \code{\link[ggplot2]{theme_classic}}).}
+\item{gg_theme}{A complete ggplot2 theme object (e.g.
+\code{\link[ggplot2]{theme_classic}}), a function returning a complete
+ggplot2 theme, or a change to the current \code{gg_theme}.}
 
-\item{xp_theme}{An xpose theme or vector of modifications to the xpose theme
-(e.g. \code{c(point_color = 'red', line_linetype = 'dashed')}).}
+\item{xp_theme}{A complete xpose theme object (e.g.
+\code{\link{theme_xp_default}}) or a list of modifications to the current
+\code{xp_theme} (e.g. \code{list(point_color = 'red', line_linetype =
+'dashed')}).}
 
 \item{facets}{Either a character string to use \link[ggplot2]{facet_wrap} 
 or a formula to use \link[ggplot2]{facet_grid}.}

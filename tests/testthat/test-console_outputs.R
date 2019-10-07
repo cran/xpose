@@ -50,3 +50,4 @@ test_that('Check list_special returns a proper message', {
   expect_match(capture_output(list_special(xpdb_ex_pk %>% vpc_data(quiet = TRUE))), 
                '^Specials:\n\\s+problem\\s+method\\s+type\\s+data\\s+modified\n.+$')
 })
+

@@ -1,7 +1,7 @@
 Package: xpose
 Type: Package
 Title: Diagnostics for Pharmacometric Models
-Version: 0.4.4
+Version: 0.4.5
 Authors@R: c(
       person('Benjamin', 'Guiastrennec',
              role  = c('aut', 'cre', 'cph'),
@@ -23,11 +23,12 @@ Description: Diagnostics for non-linear mixed-effects (population)
     'xpose' facilitates data import, creation of numerical run summary 
     and provide 'ggplot2'-based graphics for data exploration and model 
     diagnostics.
-Depends: R (>= 3.1.2), ggplot2 (>= 2.2.1)
-Imports: dplyr (>= 0.7.0), ggforce, grDevices, purrr (>= 0.2.0), readr,
-        rlang (>= 0.1.2), stringr, tibble (>= 1.3.1), tidyr (>= 0.6),
-        utils, stats, vpc (>= 1.0.0)
-Suggests: gridExtra, rmarkdown, knitr, testthat, plotly, webshot,
+Depends: R (>= 3.3.0), ggplot2 (>= 3.1.0)
+Imports: dplyr (>= 0.8.0), ggforce (>= 0.2.0), grDevices, purrr (>=
+        0.3.0), readr (>= 1.3.0), rlang (>= 0.3.0), stringr (>= 1.4.0),
+        tibble (>= 2.1.0), tidyr (>= 0.8.0), utils, stats, vpc (>=
+        1.1.0)
+Suggests: here, gridExtra, rmarkdown, knitr, testthat, plotly, webshot,
         mvtnorm
 License: LGPL-3
 URL: https://github.com/UUPharmacometrics/xpose
@@ -37,7 +38,7 @@ LazyData: true
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
 NeedsCompilation: no
-Packaged: 2019-03-18 23:10:41 UTC; benji
+Packaged: 2019-10-06 23:27:02 UTC; benji
 Author: Benjamin Guiastrennec [aut, cre, cph],
   Andrew C. Hooker [aut, cph],
   Sebastian Ueckert [aut, cph],
@@ -45,4 +46,4 @@ Author: Benjamin Guiastrennec [aut, cre, cph],
   Mats O. Karlsson [aut, cph]
 Maintainer: Benjamin Guiastrennec <guiastrennec@gmail.com>
 Repository: CRAN
-Date/Publication: 2019-03-21 17:10:03 UTC
+Date/Publication: 2019-10-07 04:50:03 UTC

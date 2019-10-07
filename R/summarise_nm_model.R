@@ -39,10 +39,10 @@ summarise_nm_model <- function(file, model, software, rounding) {
   if (nrow(tmp) == 0) return(sum)
   
   tmp %>% 
-    tidyr::complete_(cols = c(quote(problem), quote(label)), 
-                     fill = list(subprob = 0, value = 'na')) %>%
+    tidyr::complete(!!!rlang::syms(c('problem', 'label')), 
+                    fill = list(subprob = 0, value = 'na')) %>%
     dplyr::bind_rows(dplyr::filter(sum, sum$problem == 0)) %>%
-    dplyr::arrange_(.dots = c('problem', 'label', 'subprob')) %>%
+    dplyr::arrange_at(.vars = c('problem', 'label', 'subprob')) %>%
     dplyr::mutate(descr = dplyr::case_when(
       .$label == 'software' ~ 'Software',
       .$label == 'version' ~ 'Software version',
@@ -201,7 +201,7 @@ sum_description <- function(model, software) {
       end <- ifelse(length(end) == 0, nrow(x), min(end) - 1)
       
       x <- dplyr::slice(.data = x, seq(start, end)) %>% 
-      {stringr::str_replace(.$comment, '^\\s*;\\s*', '')} %>% 
+        {stringr::str_replace(.$comment, '^\\s*;\\s*', '')} %>% 
         stringr::str_c(collapse = ' ') %>% 
         {sum_tpl('descr', stringr::str_match(., ':\\s*(.+)$')[, 2])}
       return(value = x)
@@ -215,7 +215,7 @@ sum_input_data <- function(model, software) {
   if (software == 'nonmem') {
     x <- model %>% 
       dplyr::filter(.$subroutine == 'dat') %>% 
-      dplyr::distinct_(.dots = 'level', .keep_all = TRUE) # Assumes that the data is on the first row
+      dplyr::distinct(!!rlang::sym('level'), .keep_all = TRUE) # Assumes that the data is on the first row
     
     if (nrow(x) == 0) return(sum_tpl('data', 'na'))
     
@@ -322,7 +322,7 @@ sum_runtime <- function(model, software) {
     if (nrow(x) == 0) return(sum_tpl('runtime', 'na'))
     
     x %>% 
-      dplyr::group_by_(.dots = 'problem') %>% 
+      dplyr::group_by_at(.vars = 'problem') %>% 
       dplyr::mutate(subprob = (1:n()) - 1) %>% 
       dplyr::ungroup() %>% 
       dplyr::mutate(label = 'runtime',
@@ -359,12 +359,13 @@ sum_term <- function(model, software) {
     
     x %>% 
       dplyr::slice(purrr::map2(start, end, ~seq(.x,.y)) %>% purrr::flatten_int()) %>% 
-      dplyr::group_by_(.dots = 'problem') %>% 
+      dplyr::group_by_at(.vars = 'problem') %>% 
       tidyr::nest() %>% 
+      dplyr::ungroup() %>% 
       dplyr::mutate(value = purrr::map_chr(.$data, function(y) {
         drop <- min(which(stringr::str_detect(y$code, 'NO. OF')))
         dplyr::slice(.data = y, seq(1, (drop - 1))) %>% 
-        {stringr::str_trim(.$code)} %>% 
+          {stringr::str_trim(.$code)} %>% 
           stringr::str_trunc(width = 56) %>% 
           stringr::str_c(collapse = '\n') %>% 
           stringr::str_replace('0MINIM', 'MINIM')})) %>% 
@@ -385,14 +386,15 @@ sum_warnings <- function(model, software) {
     
     x %>% 
       dplyr::mutate(problem = stringr::str_match(.$code, 'FOR PROBLEM\\s+(\\d+)')[, 2]) %>% 
-      tidyr::fill_(fill_cols = 'problem') %>% 
+      tidyr::fill(!!rlang::sym('problem')) %>% 
       dplyr::mutate(problem = as.numeric(.$problem)) %>% 
       dplyr::filter(!stringr::str_detect(.$code, 'FOR PROBLEM\\s+(\\d+)')) %>% 
       dplyr::mutate(code = stringr::str_trim(.$code)) %>% 
       dplyr::mutate(code = stringr::str_trunc(.$code, width = 56)) %>% 
-      dplyr::distinct_(.dots = c('problem', 'code')) %>%
-      dplyr::group_by_(.dots = 'problem') %>% 
+      dplyr::distinct(!!!rlang::syms(c('problem', 'code'))) %>%
+      dplyr::group_by_at(.vars = 'problem') %>% 
       tidyr::nest() %>% 
+      dplyr::ungroup() %>% 
       dplyr::mutate(value = purrr::map_chr(.$data, ~stringr::str_c(.$code, collapse = '\n'))) %>% 
       dplyr::mutate(subprob = 0, label = 'warnings') %>% 
       dplyr::select(dplyr::one_of('problem', 'subprob', 'label', 'value'))
@@ -433,8 +435,9 @@ sum_condn <- function(model, software, rounding) {
     if (nrow(x) == 0) return(sum_tpl('condn', 'na'))
     
     x %>% 
-      dplyr::group_by_(.dots = 'problem') %>% 
+      dplyr::group_by_at(.vars = 'problem') %>% 
       tidyr::nest() %>% 
+      dplyr::ungroup() %>% 
       dplyr::mutate(subprob = 0,
                     label = 'condn',
                     value = purrr::map_chr(.$data, function(x) {
@@ -494,7 +497,7 @@ sum_ofv <- function(model, software) {
     
     x %>% 
       dplyr::mutate(value = stringr::str_match(.$code, '\\*\\s+(.+)\\s+\\*')[, 2]) %>% 
-      dplyr::group_by_(.dots =  'problem') %>% 
+      dplyr::group_by_at(.vars =  'problem') %>% 
       dplyr::mutate(subprob = (1:n()) - 1, label = 'ofv') %>% 
       dplyr::select(dplyr::one_of('problem', 'subprob', 'label', 'value')) %>% 
       dplyr::ungroup()
@@ -523,7 +526,7 @@ sum_method <- function(model, software) {
       dplyr::mutate(value = stringr::str_c(stringr::str_to_lower(.$value), dplyr::if_else(.$inter, '-i', ''),
                                            dplyr::if_else(.$lapl, ' laplacian', ''), 
                                            dplyr::if_else(.$like, ' likelihood', ''))) %>% 
-      dplyr::group_by_(.dots = 'problem') %>% 
+      dplyr::group_by_at(.vars = 'problem') %>% 
       dplyr::mutate(subprob = (1:n()) - 1, label = 'method') %>% 
       dplyr::select(dplyr::one_of('problem', 'subprob', 'label', 'value')) %>% 
       dplyr::ungroup()
@@ -537,8 +540,9 @@ sum_shk <- function(model, software, type, rounding) {
     ## Method 3 (worse one)
     x <- model %>% 
       dplyr::filter(.$subroutine == 'lst') %>% 
-      dplyr::group_by_(.dots = 'problem') %>% 
+      dplyr::group_by_at(.vars = 'problem') %>% 
       tidyr::nest() %>% 
+      dplyr::ungroup() %>% 
       dplyr::mutate(start = purrr::map_int(.x = .$data, .f = function(x) {
         stringr::str_c(stringr::str_to_upper(type), 'SHRINK[^V]') %>% 
           stringr::regex(ignore_case = TRUE) %>% 
@@ -550,25 +554,35 @@ sum_shk <- function(model, software, type, rounding) {
     
     if (nrow(x) == 0) return(sum_tpl(stringr::str_c(type, 'shk'), 'na'))
     
-    x %>% 
+    x <- x %>% 
       dplyr::mutate(rows = purrr::map2(.x = .$data, .y = .$start, .f = function(x, start) {
         x$code[start:nrow(x)] %>% 
-        {start + (which.max(stringr::str_detect(., '^\\s+\\D')[-1]) - 1)} %>% 
-        {seq(start, .)}})) %>%
+          {start + (which.max(stringr::str_detect(., '^\\s+\\D')[-1]) - 1)} %>% 
+          {seq(start, .)}})) %>%
       dplyr::mutate(code = purrr::map2_chr(.x = .$data, .y = .$rows, 
                                            ~stringr::str_c(.x$code[.y], collapse = ' '))) %>% 
       dplyr::mutate(code = stringr::str_match(.$code, '\\Q(%)\\E:*\\s*(.+)')[, 2]) %>% 
       dplyr::mutate(code = stringr::str_split(.$code, '\\s+')) %>% 
       dplyr::mutate(value = purrr::map(.$code, ~round(as.numeric(.), digits = rounding)),
                     grouping = purrr::map(.$code, ~stringr::str_c(' [', 1:length(.), ']', sep = ''))) %>% 
-      dplyr::group_by_(.dots = 'problem') %>% 
+      dplyr::group_by_at(.vars = 'problem') %>% 
       dplyr::mutate(subprob = (1:n()) - 1) %>% 
-      dplyr::ungroup() %>% 
-      tidyr::unnest_(unnest_cols = c('value', 'grouping')) %>% 
+      dplyr::ungroup()
+    
+    ## TEMP handling
+    if (tidyr_new_interface()) {
+      x <- x %>% tidyr::unnest(cols = dplyr::one_of('value', 'grouping'))
+    } else {
+      x <- x %>% tidyr::unnest(dplyr::one_of('value', 'grouping'))
+    }
+    ## END TEMP
+    
+    x %>% 
       dplyr::filter(.$value != 100) %>% 
       dplyr::mutate(value = stringr::str_c(.$value, .$grouping)) %>% 
-      dplyr::group_by_(.dots = c('problem', 'subprob')) %>% 
+      dplyr::group_by_at(.vars = c('problem', 'subprob')) %>% 
       tidyr::nest() %>% 
+      dplyr::ungroup() %>% 
       dplyr::mutate(label = stringr::str_c(type, 'shk'),
                     value = purrr::map_chr(.$data, ~stringr::str_c(.$value, collapse = ', '))) %>% 
       dplyr::select(dplyr::one_of('problem', 'subprob', 'label', 'value')) %>% 
