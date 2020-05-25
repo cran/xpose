@@ -118,6 +118,13 @@ vpc_data <- function(xpdb,
                             sim_cols = sim_cols, ci = opt$ci, uloq = opt$uloq, lloq = opt$lloq, 
                             smooth = FALSE, vpcdb = TRUE, verbose = !quiet) 
   } else if (vpc_type == 'censored') {
+    
+    # TEMPORARY check compatibility of versions
+    if (utils::packageVersion("dplyr") > "0.8.5" & utils::packageVersion("vpc") < "1.2.1") {
+      stop(paste0("`dplyr` (v", utils::packageVersion("dplyr"),  
+                  ") and `vpc` (v", utils::packageVersion("vpc"), ") are not compatible with each other."), call. = FALSE)
+    }
+    
     vpc_dat <- vpc::vpc_cens(obs = obs_data, sim = sim_data, psn_folder = NULL, bins = opt$bins, 
                              n_bins = opt$n_bins, bin_mid = opt$bin_mid, obs_cols = obs_cols, 
                              sim_cols = sim_cols, stratify = stratify, ci = opt$ci, 
@@ -150,10 +157,13 @@ vpc_data <- function(xpdb,
                                    'ylab', 'labeller')) %>%
     purrr::map_at('vpc_dat', function(x) {
       x <- x %>% 
+        dplyr::ungroup() %>% 
+        dplyr::mutate_all(.funs = unname) %>% # remove warning in gather
         tidyr::gather(key = 'tmp', value = 'value', dplyr::matches('\\.(low|med|up)')) %>% 
         tidyr::separate(col = !!rlang::sym('tmp'), 
                         into = c('Simulations', 'ci'), sep = '\\.') %>% 
-        tidyr::spread(key = 'ci', value = 'value')
+        tidyr::spread(key = 'ci', value = 'value') %>%
+        dplyr::ungroup()
       
       if (vpc_type == 'continuous') {
         x <- dplyr::mutate(.data = x, 
@@ -161,7 +171,8 @@ vpc_data <- function(xpdb,
                                                 labels = c(stringr::str_c(min(opt$pi)*100, 'th percentile'), 
                                                            'Median', stringr::str_c(max(opt$pi)*100, 'th percentile'))))
       } else {
-        x <- dplyr::mutate(.data = x, Simulations = factor(x$Simulations, levels = 'q50', labels = 'Median'))
+        x <- dplyr::mutate(.data = x, 
+                           Simulations = factor(x$Simulations, levels = 'q50', labels = 'Median'))
       }
       if ('strat2' %in% colnames(x)) {
         x$strat1 <- stringr::str_replace(x$strat1, stringr::str_c(vpc_dat$stratify[1], '='), '')
@@ -176,12 +187,15 @@ vpc_data <- function(xpdb,
     purrr::map_at('aggr_obs', function(x) {
       if (vpc_type == 'continuous') {
         x <- x %>% 
+          dplyr::ungroup() %>%
+          dplyr::mutate_all(.funs = unname) %>% # remove warning in gather
           tidyr::gather(key = 'Observations', value = 'value', dplyr::one_of('obs5', 'obs50', 'obs95')) %>% 
           dplyr::mutate(Observations = factor(.$Observations, levels = c('obs5', 'obs50', 'obs95'),
                                               labels = c(stringr::str_c(min(opt$pi)*100, 'th percentile'), 
                                                          'Median', stringr::str_c(max(opt$pi)*100, 'th percentile'))))
       } else {
         x <- x %>% 
+          dplyr::ungroup() %>%
           tidyr::gather(key = 'Observations', value = 'value', dplyr::one_of('obs50')) %>% 
           dplyr::mutate(Observations = factor(.$Observations, levels = 'obs50', labels = 'Median'))
       }
