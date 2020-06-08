@@ -1,7 +1,7 @@
 Package: xpose
 Type: Package
 Title: Diagnostics for Pharmacometric Models
-Version: 0.4.9
+Version: 0.4.10
 Authors@R: c(
       person('Benjamin', 'Guiastrennec',
              role  = c('aut', 'cre', 'cph'),
@@ -19,7 +19,7 @@ Authors@R: c(
              role  = c('aut', 'cph'),
              email = 'mats.karlsson@farmbio.uu.se'))
 Description: Diagnostics for non-linear mixed-effects (population) 
-    models from 'NONMEM' <http://www.iconplc.com/innovation/nonmem/>. 
+    models from 'NONMEM' <https://www.iconplc.com/innovation/nonmem/>. 
     'xpose' facilitates data import, creation of numerical run summary 
     and provide 'ggplot2'-based graphics for data exploration and model 
     diagnostics.
@@ -38,7 +38,7 @@ LazyData: true
 VignetteBuilder: knitr
 RoxygenNote: 7.1.0
 NeedsCompilation: no
-Packaged: 2020-05-25 09:32:42 UTC; bguiastr
+Packaged: 2020-06-08 06:33:23 UTC; bguiastr
 Author: Benjamin Guiastrennec [aut, cre, cph],
   Andrew C. Hooker [aut, cph],
   Sebastian Ueckert [aut, cph],
@@ -46,4 +46,4 @@ Author: Benjamin Guiastrennec [aut, cre, cph],
   Mats O. Karlsson [aut, cph]
 Maintainer: Benjamin Guiastrennec <guiastrennec@gmail.com>
 Repository: CRAN
-Date/Publication: 2020-05-25 14:20:02 UTC
+Date/Publication: 2020-06-08 09:50:03 UTC
