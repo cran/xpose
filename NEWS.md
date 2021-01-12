@@ -1,3 +1,6 @@
+# xpose 0.4.12
+* Compatibility fix for R 4.1.x
+
 # xpose 0.4.11
 * Improve `noLD` in tests
 
@@ -152,4 +155,4 @@
 * Defined the `xpose_geom()` core function to specifically direct arguments to [`ggplot2`](https://ggplot2.tidyverse.org) layers
 * Defined the concept of template titles
 * Define the templates for `xpose_theme()`
-* Makes use of the [`tidyverse`](https://tidyverse.org) and pipes `%>%`
+* Makes use of the [`tidyverse`](https://www.tidyverse.org/) and pipes `%>%`
