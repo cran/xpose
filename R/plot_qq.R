@@ -61,12 +61,12 @@ prm_qq <- function(xpdb,
            opt = data_opt(.problem = .problem, 
                           filter = only_distinct(xpdb, .problem, facets, quiet), 
                           tidy = TRUE, value_col = prm_col),
-           mapping = aes_c(aes_string(sample = 'value'), mapping), 
+           mapping = aes_c(aes(sample = .data[["value"]]), mapping), 
            type = type, guide = guide, facets = facets,
            xscale = check_scales('x', log), 
            yscale = check_scales('y', log), 
            title = title, subtitle = subtitle, caption = caption,
-           tag = tag, plot_name = as.character(match.call()[[1]]), 
+           tag = tag, plot_name = stringr::str_remove(deparse(match.call()[[1]]), "(\\w+\\.*)+::"), 
            xscale_name = 'Quantiles of normal', 
            yscale_name = 'Quantiles of parameter', ...)
 }
@@ -113,12 +113,12 @@ eta_qq <- function(xpdb,
                           filter = only_distinct(xpdb, .problem, facets, quiet), 
                           tidy = TRUE, value_col = eta_col,
                           post_processing = post_processing_eta),
-           mapping = aes_c(aes_string(sample = 'value'), mapping), 
+           mapping = aes_c(aes(sample = .data[["value"]]), mapping), 
            type = type, guide = guide, facets = facets,
            xscale = check_scales('x', log), 
            yscale = check_scales('y', log), 
            title = title, subtitle = subtitle, caption = caption,
-           tag = tag, plot_name = as.character(match.call()[[1]]), 
+           tag = tag, plot_name = stringr::str_remove(deparse(match.call()[[1]]), "(\\w+\\.*)+::"), 
            xscale_name = 'Quantiles of normal', 
            yscale_name = 'Quantiles of eta', ...)
 }
@@ -157,12 +157,12 @@ res_qq <- function(xpdb,
     opt <- data_opt(.problem = .problem, 
                     filter = only_obs(xpdb, .problem, quiet),
                     tidy = TRUE, value_col = res)
-    vars <- aes_c(aes_string(sample = 'value'), mapping)
+    vars <- aes_c(aes(sample = .data[["value"]]), mapping)
   } else {
     if (missing(facets)) facets <- xpdb$xp_theme$facets
     opt <- data_opt(.problem = .problem, 
                     filter = only_obs(xpdb, .problem, quiet))
-    vars <- aes_c(aes_string(sample = toupper(res)), mapping)
+    vars <- aes_c(aes(sample = .data[[toupper(res)]]), mapping)
   }
   
   xplot_qq(xpdb = xpdb, quiet = quiet,
@@ -171,7 +171,7 @@ res_qq <- function(xpdb,
            xscale = check_scales('x', log), 
            yscale = check_scales('y', log), 
            title = title, subtitle = subtitle, caption = caption,
-           tag = tag, plot_name = as.character(match.call()[[1]]), ...) +
+           tag = tag, plot_name = stringr::str_remove(deparse(match.call()[[1]]), "(\\w+\\.*)+::"), ...) +
     labs(x = 'Quantiles of normal', 
          y = 'Quantiles of @sample')
 }
@@ -212,12 +212,12 @@ cov_qq <- function(xpdb,
            opt = data_opt(.problem = .problem, 
                           filter = only_distinct(xpdb, .problem, facets, quiet), 
                           tidy = TRUE, value_col = cov_col),
-           mapping = aes_c(aes_string(sample = 'value'), mapping), 
+           mapping = aes_c(aes(sample = .data[["value"]]), mapping), 
            type = type, guide = guide, facets = facets,
            xscale = check_scales('x', log), 
            yscale = check_scales('y', log), 
            title = title, subtitle = subtitle, caption = caption,
-           tag = tag, plot_name = as.character(match.call()[[1]]), 
+           tag = tag, plot_name = stringr::str_remove(deparse(match.call()[[1]]), "(\\w+\\.*)+::"), 
            xscale_name = 'Quantiles of normal', 
            yscale_name = 'Quantiles of covariate', ...)
 }

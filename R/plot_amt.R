@@ -56,11 +56,11 @@ amt_vs_idv <- function(xpdb,
                                   dplyr::select_if(.tbl = x, .predicate = function(x) dplyr::n_distinct(x) > 1)
                                 }, tidy = TRUE, value_col = amt_col,
                                 post_processing = reorder_factors(prefix = 'Comp. ')),
-                 mapping = aes_c(aes_string(x = xp_var(xpdb, .problem, type = 'idv')$col, 
-                                            y = 'value'), mapping),
+                 mapping = aes_c(aes(x = .data[[xp_var(xpdb, .problem, type = 'idv')$col]], 
+                                     y = .data[["value"]]), mapping),
                  type = type, facets = facets, 
                  xscale = check_scales('x', log), 
                  yscale = check_scales('y', log), 
                  title = title, subtitle = subtitle, caption = caption,
-                 tag = tag, plot_name = as.character(match.call()[[1]]))))
+                 tag = tag, plot_name = stringr::str_remove(deparse(match.call()[[1]]), "(\\w+\\.*)+::"))))
 }

@@ -4,18 +4,18 @@
 # xpose <a href="https://UUPharmacometrics.github.io/xpose/"><img src="man/figures/logo.png" align="right" /></a>
 
 [![R-CMD-check](https://github.com/UUPharmacometrics/xpose/workflows/R-CMD-check/badge.svg)](https://github.com/UUPharmacometrics/xpose/actions)
-[![cran\_version](https://www.r-pkg.org/badges/version/xpose)](https://CRAN.R-project.org/package=xpose)
+[![cran_version](https://www.r-pkg.org/badges/version/xpose)](https://CRAN.R-project.org/package=xpose)
 [![Codecov test
-coverage](https://codecov.io/gh/UUPharmacometrics/xpose/branch/master/graph/badge.svg)](https://codecov.io/gh/UUPharmacometrics/xpose?branch=master)
+coverage](https://codecov.io/gh/UUPharmacometrics/xpose/branch/master/graph/badge.svg)](https://app.codecov.io/gh/UUPharmacometrics/xpose?branch=master)
 [![downloads](https://cranlogs.r-pkg.org/badges/grand-total/xpose)](https://CRAN.R-project.org/package=xpose)
 
 ## Overview
 
 [xpose](https://UUPharmacometrics.github.io/xpose/) was designed as a
 [ggplot2](https://ggplot2.tidyverse.org/)-based alternative to
-[xpose4](http://xpose.sourceforge.net). xpose aims to reduce the post
-processing burden and improve diagnostics commonly associated the
-development of non-linear mixed effect models.
+[xpose4](https://uupharmacometrics.github.io/xpose4/). xpose aims to
+reduce the post processing burden and improve diagnostics commonly
+associated the development of non-linear mixed effect models.
 
 ## Installation
 
@@ -155,11 +155,10 @@ several useful articles to make full use of xpose
 When working with xpose, a working knowledge of ggplot2 is recommended.
 Help for ggplot2 can be found in:
 
--   The ggplot2
-    [documentation](https://ggplot2.tidyverse.org/reference/)
--   The ggplot2 [mailing
-    list](https://groups.google.com/forum/?fromgroups#!forum/ggplot2)
--   Internet resources (stack overflow, etc.)
+- The ggplot2 [documentation](https://ggplot2.tidyverse.org/reference/)
+- The ggplot2 [mailing
+  list](https://groups.google.com/forum/?fromgroups#!forum/ggplot2)
+- Internet resources (stack overflow, etc.)
 
 ## Contribute
 

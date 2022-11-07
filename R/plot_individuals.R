@@ -17,10 +17,11 @@
 #' @inheritSection xplot_scatter Template titles
 #' @seealso \code{\link{xplot_scatter}}
 #' @examples
+#' \dontrun{
 #' # Basic example
 #' ind_plots(xpdb_ex_pk, page = 1,
 #'           ncol = 2, nrow = 2)
-#' 
+#' }
 #' @export
 ind_plots <- function(xpdb,
                       mapping       = NULL,
@@ -64,15 +65,16 @@ ind_plots <- function(xpdb,
                                 post_processing = function(x) {
                                   dplyr::mutate(.data = x, variable = factor(x$variable, levels = variable_names))
                                 }),
-                 mapping = aes_c(aes_string(x = xp_var(xpdb, .problem, type = 'idv')$col, 
-                                            y = 'value', line_color = 'variable', text_color = 'variable',
-                                            line_linetype = 'variable', point_color = 'variable', 
-                                            point_alpha = 'variable'), mapping),
+                 mapping = aes_c(aes(
+                   x = .data[[xp_var(xpdb, .problem, type = 'idv')$col]], 
+                   y = .data[["value"]], line_color = .data[["variable"]], 
+                   text_color = .data[["variable"]], line_linetype = .data[["variable"]], 
+                   point_color = .data[["variable"]], point_alpha = .data[["variable"]]), mapping),
                  type = type, facets = facets,
                  xscale = check_scales('x', log),
                  yscale = check_scales('y', log), 
                  title = title, subtitle = subtitle, caption = caption, 
-                 tag = tag, plot_name = as.character(match.call()[[1]])))) +
+                 tag = tag, plot_name = stringr::str_remove(deparse(match.call()[[1]]), "(\\w+\\.*)+::")))) +
     scale_alpha_manual(values = point_alpha) +
     scale_color_manual(values = color) +
     scale_linetype_manual(values = line_linetype)

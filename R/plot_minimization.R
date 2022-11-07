@@ -59,12 +59,12 @@ prm_vs_iteration <- function(xpdb,
                                  x
                                }, tidy = TRUE, index_col = x_var,
                                post_processing = reorder_factors(prefix = NA)),
-                mapping = aes_c(aes_string(x = x_var, y = 'value'), mapping),
+                mapping = aes_c(aes(x = .data[[x_var]], y = .data[["value"]]), mapping),
                 type = type, guide = guide, facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
-                tag = tag, plot_name = as.character(match.call()[[1]]),
+                tag = tag, plot_name = stringr::str_remove(deparse(match.call()[[1]]), "(\\w+\\.*)+::"),
                 scales = 'free_y', ...)
 }
 
@@ -111,11 +111,11 @@ grd_vs_iteration <- function(xpdb,
                                  x
                                }, tidy = TRUE, index_col = x_var, 
                                post_processing = reorder_factors(prefix = 'GRD(', suffix = ')')),
-                mapping = aes_c(aes_string(x = x_var, y = 'value'), mapping),
+                mapping = aes_c(aes(x = .data[[x_var]], y = .data[["value"]]), mapping),
                 type = type, guide = guide, facets = facets, 
                 xscale = check_scales('x', log), 
                 yscale = check_scales('y', log), 
                 title = title, subtitle = subtitle, caption = caption,
-                tag = tag, plot_name = as.character(match.call()[[1]]),
+                tag = tag, plot_name = stringr::str_remove(deparse(match.call()[[1]]), "(\\w+\\.*)+::"),
                 scales = 'free_y', ...)
 }
