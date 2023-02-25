@@ -65,7 +65,7 @@ dv_vs_ipred(xpdb,
             point_color = 'blue', point_alpha = 0.5, 
             point_stroke = 0, point_size = 1.5, 
             # Change lines aesthetics 
-            line_alpha = 0.5, line_size = 0.5, 
+            line_alpha = 0.5, line_linewidth = 0.5, 
             line_color = 'orange', line_linetype = 'solid', 
             # Change smooth aesthetics
             smooth_method = 'lm')
@@ -83,7 +83,7 @@ dv_vs_ipred(xpdb, facets = SEX~MED1, margins = TRUE)
 ## ----demo layers----------------------------------------------------------------------------------
 dv_vs_ipred(xpdb) +
   geom_rug(alpha = 0.2, color = 'grey50',
-           sides = 'lb', size = 0.4) +
+           sides = 'lb', linewidth = 0.4) +
   annotate(geom = 'text',
            fontface = 'bold',
            color = 'darkred',
