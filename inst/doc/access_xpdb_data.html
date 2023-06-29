@@ -339,7 +339,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Access the xpdb data</h1>
 <h4 class="author">Benjamin Guiastrennec</h4>
-<h4 class="date">18 April, 2023</h4>
+<h4 class="date">29 June, 2023</h4>
 
 
 
@@ -352,7 +352,7 @@ R and used to summarize data or create plots.</p>
 simply by writing the xpdb name to the console or by using the
 <code>print()</code> function. Any of these files can be accessed from
 the xpdb using one of the functions listed below.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>xpdb <span class="co"># or print(xpdb)</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>xpdb <span class="co"># or print(xpdb)</span></span></code></pre></div>
 <pre><code>run001.lst overview: 
  - Software: nonmem 7.3.0 
  - Attached files (memory usage 1.4 Mb): 
@@ -374,8 +374,8 @@ specified a subset of the code can be returned based on
 <code>$PROBLEM</code>.</p>
 <p><em>Note that general code warnings and PsN outputs appended are
 listed as problem 0.</em></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>code <span class="ot">&lt;-</span> <span class="fu">get_code</span>(xpdb)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>code</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>code <span class="ot">&lt;-</span> <span class="fu">get_code</span>(xpdb)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>code</span></code></pre></div>
 <pre><code># A tibble: 764 × 5
    problem level subroutine code                                                     comment        
  *   &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;                                                    &lt;chr&gt;          
@@ -403,8 +403,8 @@ returned.</p>
 table will be identical to its file (i.e. the order of the columns may
 have been changed and tables with <code>FIRSTONLY</code> will no longer
 be deduplicated).</em></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">get_data</span>(xpdb, <span class="at">table =</span> <span class="st">&#39;cotab001&#39;</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>data</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">get_data</span>(xpdb, <span class="at">table =</span> <span class="st">&#39;cotab001&#39;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>data</span></code></pre></div>
 <pre><code># A tibble: 550 × 4
    ID     CLCR   AGE    WT
    &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -428,8 +428,8 @@ by <code>.problem</code>, <code>.subprob</code> and/or
 <code>.method</code>. If more than one <code>file</code> name,
 <code>.problem</code>, <code>.subprob</code>, or <code>.method</code> is
 provided a named list is returned.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>file <span class="ot">&lt;-</span> <span class="fu">get_file</span>(xpdb, <span class="at">file =</span> <span class="st">&#39;run001.ext&#39;</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>file</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>file <span class="ot">&lt;-</span> <span class="fu">get_file</span>(xpdb, <span class="at">file =</span> <span class="st">&#39;run001.ext&#39;</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>file</span></code></pre></div>
 <pre><code># A tibble: 28 × 16
    ITERATION THETA1 THETA2 THETA3 THETA4 THETA5  THETA6  THETA7 `SIGMA(1,1)` `OMEGA(1,1)`
        &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
@@ -454,9 +454,9 @@ parameter estimates. To get a nice parameter table printed to the
 console use the function <code>prm_table()</code> instead. The arguments
 <code>.problem</code>, <code>.subprob</code> and <code>.method</code>
 can be used to select the parameter estimates to output.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Raw output for editing</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>prm <span class="ot">&lt;-</span> <span class="fu">get_prm</span>(xpdb, <span class="at">digits =</span> <span class="dv">4</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>prm</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># Raw output for editing</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>prm <span class="ot">&lt;-</span> <span class="fu">get_prm</span>(xpdb, <span class="at">digits =</span> <span class="dv">4</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>prm</span></code></pre></div>
 <pre><code># A tibble: 11 × 10
    type  name       label           value       se     rse fixed diagonal     m     n
  * &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;lgl&gt; &lt;lgl&gt;    &lt;dbl&gt; &lt;dbl&gt;
@@ -471,8 +471,8 @@ can be used to select the parameter estimates to output.</p>
  9 ome   OMEGA(2,2) &quot;IIV V&quot;       0.195    0.0320   0.164  FALSE TRUE         2     2
 10 ome   OMEGA(3,3) &quot;IIV KA&quot;      1.38     0.202    0.146  FALSE TRUE         3     3
 11 sig   SIGMA(1,1) &quot;&quot;            1       NA       NA      TRUE  TRUE         1     1</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Nicely formated table</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prm_table</span>(xpdb, <span class="at">digits =</span> <span class="dv">4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co"># Nicely formated table</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="fu">prm_table</span>(xpdb, <span class="at">digits =</span> <span class="dv">4</span>)</span></code></pre></div>
 <pre><code>
 Reporting transformed parameters:
 For the OMEGA and SIGMA matrices, values are reported as standard deviations for the diagonal elements and as correlations for the off-diagonal elements. The relative standard errors (RSE) for OMEGA and SIGMA are reported on the approximate standard deviation scale (SE/variance estimate)/2. Use `transform = FALSE` to report untransformed parameters.
@@ -499,8 +499,8 @@ the argument <code>.problem</code> is specified a subset of the summary
 can be returned based on <code>$PROBLEM</code>.</p>
 <p><em>Note that general summary information are listed as problem
 0.</em></p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>run_sum <span class="ot">&lt;-</span> <span class="fu">get_summary</span>(xpdb, <span class="at">.problem =</span> <span class="dv">0</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>run_sum</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>run_sum <span class="ot">&lt;-</span> <span class="fu">get_summary</span>(xpdb, <span class="at">.problem =</span> <span class="dv">0</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>run_sum</span></code></pre></div>
 <pre><code># A tibble: 12 × 5
    problem subprob descr               label       value                        
      &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;               &lt;chr&gt;       &lt;chr&gt;                        

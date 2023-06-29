@@ -339,7 +339,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Import model outputs</h1>
 <h4 class="author">Benjamin Guiastrennec</h4>
-<h4 class="date">18 April, 2023</h4>
+<h4 class="date">29 June, 2023</h4>
 
 
 
@@ -348,7 +348,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p>The function <code>xpose_data()</code> collects all model output
 files and table and organizes them into an R object commonly called
 <code>xpdb</code> for xpose data base.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>xpdb <span class="ot">&lt;-</span> <span class="fu">xpose_data</span>(<span class="at">runno =</span> <span class="st">&#39;001&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>xpdb <span class="ot">&lt;-</span> <span class="fu">xpose_data</span>(<span class="at">runno =</span> <span class="st">&#39;001&#39;</span>)</span></code></pre></div>
 </div>
 <div id="imported-files" class="section level3">
 <h3>Imported files</h3>
@@ -374,13 +374,13 @@ residual standard error (RSE)</li>
 </ul>
 <p>When importing the files, xpose will return messages to the console
 and inform of any issue encountered during the import.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>xpdb <span class="ot">&lt;-</span> <span class="fu">xpose_data</span>(<span class="at">runno =</span> <span class="st">&#39;001&#39;</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Looking <span class="cf">for</span> nonmem output tables</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>Reading<span class="sc">:</span> sdtab001, catab001, cotab001, patab001 [<span class="sc">$</span>prob no<span class="fl">.1</span>]</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>Looking <span class="cf">for</span> nonmem output files</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>Reading<span class="sc">:</span> run001.cor, run001.cov, run001.ext, run001.grd, run001.phi</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>xpdb <span class="ot">&lt;-</span> <span class="fu">xpose_data</span>(<span class="at">runno =</span> <span class="st">&#39;001&#39;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>Looking <span class="cf">for</span> nonmem output tables</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>Reading<span class="sc">:</span> sdtab001, catab001, cotab001, patab001 [<span class="sc">$</span>prob no<span class="fl">.1</span>]</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>Looking <span class="cf">for</span> nonmem output files</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>Reading<span class="sc">:</span> run001.cor, run001.cov, run001.ext, run001.grd, run001.phi</span></code></pre></div>
 <p>These messages can be silenced with the option
 <code>quiet = TRUE</code>.</p>
 <div id="firstonly-tables" class="section level5">
