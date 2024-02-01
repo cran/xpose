@@ -9,7 +9,8 @@ read_nm_model(
   prefix = "run",
   ext = ".lst",
   file = NULL,
-  dir = NULL
+  dir = NULL,
+  check_ext = TRUE
 )
 }
 \arguments{
@@ -19,7 +20,7 @@ combination with \code{prefix} and \code{ext}.}
 \item{prefix}{Prefix to be used to generate model file name. Used in
 combination with \code{runno} and \code{ext}.}
 
-\item{ext}{Extension to be used to generate model file name.Should be one of
+\item{ext}{Extension to be used to generate model file name. Should be one of
 '.lst' (default), '.out', '.res', '.mod' or '.ctl' for NONMEM.}
 
 \item{file}{Model file name (preferably a '.lst' file) containing the file
@@ -27,18 +28,23 @@ extension. Alternative to \code{prefix}, \code{runno} and \code{ext}
 arguments.}
 
 \item{dir}{Location of the model files.}
+
+\item{check_ext}{Logical, if \code{TRUE} will provide an error message if the
+extension of the NONMEM input file is not one of '.lst', '.out', '.res',
+'.mod' or '.ctl' for NONMEM. If \code{FALSE} any file extension can be
+used.}
 }
 \value{
 A \code{\link[dplyr]{tibble}} of class \code{model} containing the following columns: 
 \itemize{
- \item{\strong{problem}}{: a numeric identifier for the $PROBLEM associated with the code.}
- \item{\strong{level}}{: a unique numeric identifier to each subroutine block associated with the code.}
- \item{\strong{subroutine}}{: a character identifier named after the 3 first letters of the subroutine name e.g. '$THETA' and 
+ \item problem: a numeric identifier for the $PROBLEM associated with the code.
+ \item level: a unique numeric identifier to each subroutine block associated with the code.
+ \item subroutine: a character identifier named after the 3 first letters of the subroutine name e.g. '$THETA' and 
  '$TABLE' will become 'the' and 'tab' respectively. In addition all output from the .lst is labeled 'lst', the general nonmem 
  output e.g. NM-TRAN messages are labelled 'oth'. With priors thp, tpv, omp, opd, sip, spd abbreviations are given to the THETAP, 
- THETAPV, OMEGAP, etc.}
- \item{\strong{code}}{: the code without comments or subroutine names e.g. '$THETA 0.5 ; TVCL' will return '0.5'.}
- \item{\strong{comment}}{: the last comment of a record e.g. '0.5 ; Clearance (L/h) ; TVCL' will return 'TVCL'.}
+ THETAPV, OMEGAP, etc.
+ \item code: the code without comments or subroutine names e.g. '$THETA 0.5 ; TVCL' will return '0.5'.
+ \item comment: the last comment of a record e.g. '0.5 ; Clearance (L/h) ; TVCL' will return 'TVCL'.
 }
 }
 \description{
@@ -53,11 +59,11 @@ associated with run001.mod.
 }
 \section{File path generation}{
  The rules for model file names generation are
-  as follow: \itemize{ 
+  as follow: \itemize{
   \item with \code{runno}: the full path is generated as
   \code{<dir>/<prefix><runno>.<ext>} e.g. with \code{dir = 'model/pk'},
   \code{prefix = 'run'}, \code{runno = '001'}, \code{ext = '.lst'} the
-  resulting path would be \code{model/pk/run001.lst} 
+  resulting path would be \code{model/pk/run001.lst}
   \item with \code{file}:
   the full path is generated as \code{<dir>/<file>} e.g. with \code{dir =
   'model/pk'}, \code{file = 'run001.lst'} the resulting path would also be

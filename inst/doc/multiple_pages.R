@@ -1,4 +1,4 @@
-## ---- include = FALSE-----------------------------------------------------------------------------
+## ----include = FALSE------------------------------------------------------------------------------
 library(xpose)
 options(width = 100)
 
@@ -19,13 +19,13 @@ dv_vs_ipred(xpdb, facets = c('SEX', 'MED1'))
 # Example with a formula
 dv_vs_ipred(xpdb, facets = SEX~MED1, margins = TRUE)
 
-## ---- message = FALSE-----------------------------------------------------------------------------
+## ----message = FALSE------------------------------------------------------------------------------
 dv_vs_ipred(xpdb, facets = c('SEX', 'MED1'), ncol = 2, nrow = 1)
 
-## ---- messages = TRUE-----------------------------------------------------------------------------
+## ----messages = TRUE------------------------------------------------------------------------------
 dv_vs_ipred(xpdb, facets = c('SEX', 'MED1'), ncol = 2, nrow = 1, page = 1)
 
-## ---- eval = FALSE--------------------------------------------------------------------------------
+## ----eval = FALSE---------------------------------------------------------------------------------
 #  # Create an xpose_plot, by default page = 1
 #  p1 <- dv_vs_ipred(xpdb, facets = c('SEX', 'MED1'), ncol = 2, nrow = 1)
 #  
@@ -40,11 +40,11 @@ xpdb_numbered <- update_themes(xpdb, xp_theme = list(caption_suffix = ', page @p
 
 dv_vs_ipred(xpdb_numbered, facets = c('SEX', 'MED1'), ncol = 2, nrow = 1, page = 2)
 
-## ---- eval = FALSE--------------------------------------------------------------------------------
+## ----eval = FALSE---------------------------------------------------------------------------------
 #  dv_vs_ipred(xpdb_numbered, facets = c('SEX', 'MED1'), ncol = 2, nrow = 1) %>%
 #  xpose_save(file = 'dv_vs_ipred_multiple.pdf')
 
-## ---- eval = FALSE--------------------------------------------------------------------------------
+## ----eval = FALSE---------------------------------------------------------------------------------
 #  dv_vs_ipred(xpdb_numbered, facets = c('SEX', 'MED1'), ncol = 2, nrow = 1) %>%
 #  xpose_save(file = '@run_@plotfun_%03d.png')
 

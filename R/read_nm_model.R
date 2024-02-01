@@ -15,14 +15,14 @@
 #' @seealso \code{\link{xpose_data}}, \code{\link{read_nm_tables}}
 #' @return A \code{\link[dplyr]{tibble}} of class \code{model} containing the following columns: 
 #' \itemize{
-#'  \item{\strong{problem}}{: a numeric identifier for the $PROBLEM associated with the code.}
-#'  \item{\strong{level}}{: a unique numeric identifier to each subroutine block associated with the code.}
-#'  \item{\strong{subroutine}}{: a character identifier named after the 3 first letters of the subroutine name e.g. '$THETA' and 
+#'  \item problem: a numeric identifier for the $PROBLEM associated with the code.
+#'  \item level: a unique numeric identifier to each subroutine block associated with the code.
+#'  \item subroutine: a character identifier named after the 3 first letters of the subroutine name e.g. '$THETA' and 
 #'  '$TABLE' will become 'the' and 'tab' respectively. In addition all output from the .lst is labeled 'lst', the general nonmem 
 #'  output e.g. NM-TRAN messages are labelled 'oth'. With priors thp, tpv, omp, opd, sip, spd abbreviations are given to the THETAP, 
-#'  THETAPV, OMEGAP, etc.}
-#'  \item{\strong{code}}{: the code without comments or subroutine names e.g. '$THETA 0.5 ; TVCL' will return '0.5'.}
-#'  \item{\strong{comment}}{: the last comment of a record e.g. '0.5 ; Clearance (L/h) ; TVCL' will return 'TVCL'.}
+#'  THETAPV, OMEGAP, etc.
+#'  \item code: the code without comments or subroutine names e.g. '$THETA 0.5 ; TVCL' will return '0.5'.
+#'  \item comment: the last comment of a record e.g. '0.5 ; Clearance (L/h) ; TVCL' will return 'TVCL'.
 #' }
 #' 
 #' @examples
@@ -35,11 +35,12 @@
 #' }
 #' 
 #' @export
-read_nm_model <- function(runno   = NULL,
-                          prefix  = 'run',
-                          ext     = '.lst',
-                          file    = NULL,
-                          dir     = NULL) {
+read_nm_model <- function(runno     = NULL,
+                          prefix    = 'run',
+                          ext       = '.lst',
+                          file      = NULL,
+                          dir       = NULL,
+                          check_ext = TRUE) {
   
   if (is.null(runno) && is.null(file)) {
     stop('Argument `runno` or `file` required.', call. = FALSE)
@@ -53,8 +54,12 @@ read_nm_model <- function(runno   = NULL,
     full_path <- file_path(dir, file)
   }
   
-  if (!ext %in% c('.lst', '.out', '.res', '.mod', '.ctl')) {
-    stop('NONMEM model file extension should be one lst, out, res, mod or ctl.', call. = FALSE) 
+  if (check_ext & !ext %in% c('.lst', '.out', '.res', '.mod', '.ctl')) {
+    stop(
+      paste(
+        'NONMEM model file extension should be one of .lst, .out, .res, .mod or .ctl. If you want to use the',
+        ext ,'extension anyway use `check_ext = FALSE`'), 
+        call. = FALSE) 
   }
   
   if (!file.exists(full_path)) { 
@@ -68,7 +73,7 @@ read_nm_model <- function(runno   = NULL,
   
   model <- readr::read_lines(full_path)
   
-  if (!any(stringr::str_detect(model, '^\\s*\\$PROB.+')) && ext %in% c('.lst', '.out', '.res')) {
+  if (!any(stringr::str_detect(model, '^\\s*\\$PROB')) && ext %in% c('.lst', '.out', '.res')) {
     # Attempts to recover the model code from model file rather than in the nonmem output file
     full_path <- update_extension(full_path, c('.mod', '.ctl'))
     full_path <- full_path[file.exists(full_path)]
@@ -81,7 +86,7 @@ read_nm_model <- function(runno   = NULL,
   }
   
   # Return error if input is bad
-  if (!any(stringr::str_detect(model, '^\\s*\\$PROB.+'))) {
+  if (!any(stringr::str_detect(model, '^\\s*\\$PROB'))) {
     stop(basename(full_path), ' is not a NONMEM model.', call. = FALSE)
   }
   
@@ -89,7 +94,7 @@ read_nm_model <- function(runno   = NULL,
     dplyr::filter(!stringr::str_detect(.$code, '^;[^;]*$|^$')) %>% 
     dplyr::mutate(code = stringr::str_replace_all(.$code, '\\t+|\\s{2,}', ' ')) %>% 
     dplyr::mutate(
-      problem     = findInterval(seq_along(.$code), which(stringr::str_detect(.$code, '^\\s*\\$PROB.+'))),
+      problem     = findInterval(seq_along(.$code), which(stringr::str_detect(.$code, '^\\s*\\$PROB'))),
       level       = findInterval(seq_along(.$code), which(stringr::str_detect(.$code, '^\\s*\\$.+'))),
       subroutine  = stringr::str_match(.$code, '^\\s*\\$(\\w+)')[, 2]) %>% 
     tidyr::fill(dplyr::one_of('subroutine'))
