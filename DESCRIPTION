@@ -1,7 +1,7 @@
 Package: xpose
 Type: Package
 Title: Diagnostics for Pharmacometric Models
-Version: 0.4.18
+Version: 0.4.19
 Authors@R: c(
       person('Benjamin', 'Guiastrennec',
              role  = c('aut', 'cre', 'cph'),
@@ -37,9 +37,9 @@ BugReports: https://github.com/UUPharmacometrics/xpose/issues/
 Encoding: UTF-8
 LazyData: true
 VignetteBuilder: knitr
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 NeedsCompilation: no
-Packaged: 2024-02-01 15:43:40 UTC; bguiastr
+Packaged: 2025-01-07 19:18:38 UTC; bengu839
 Author: Benjamin Guiastrennec [aut, cre, cph],
   Andrew C. Hooker [aut, cph],
   Sebastian Ueckert [aut, cph],
@@ -47,4 +47,4 @@ Author: Benjamin Guiastrennec [aut, cre, cph],
   Mats O. Karlsson [aut, cph]
 Maintainer: Benjamin Guiastrennec <guiastrennec@gmail.com>
 Repository: CRAN
-Date/Publication: 2024-02-01 16:20:02 UTC
+Date/Publication: 2025-01-07 20:00:02 UTC

@@ -105,16 +105,16 @@ dv_vs_ipred(xpdb,
             xscale_name = 'Individual model predictions')
 
 ## ----demo themes xpdb, eval = FALSE---------------------------------------------------------------
-#  # While creating the xpdb
-#  xpdb <- xpose_data(runno = '001',
-#                     gg_theme = theme_minimal(),
-#                     xp_theme = theme_xp_xpose4())
-#  
-#  # Update a pre-existing xpdb
-#  xpdb <- update_themes(xpdb     = xpdb,
-#                        gg_theme = theme_bw2(),
-#                        xp_theme = list(point_color = 'dodgerblue4',
-#                                        line_color  = 'dodgerblue4'))
+# # While creating the xpdb
+# xpdb <- xpose_data(runno = '001',
+#                    gg_theme = theme_minimal(),
+#                    xp_theme = theme_xp_xpose4())
+# 
+# # Update a pre-existing xpdb
+# xpdb <- update_themes(xpdb     = xpdb,
+#                       gg_theme = theme_bw2(),
+#                       xp_theme = list(point_color = 'dodgerblue4',
+#                                       line_color  = 'dodgerblue4'))
 
 ## ----demo gg_theme, echo = FALSE, fig.height = 6, fig.width = 6, out.width = '75%'----------------
 gridExtra::grid.arrange(
